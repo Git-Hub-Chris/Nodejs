@@ -1,4 +1,4 @@
-// Flags: --no-warnings
+// Flags: --no-warnings --expose-internals
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -25,6 +25,8 @@ const common = require('../common');
 if (!common.hasCrypto)
   common.skip('missing crypto');
 
+const secLevel = require('internal/crypto/util').getOpenSSLSecLevel();
+
 if (!common.opensslCli)
   common.skip('missing openssl-cli');
 
@@ -43,7 +45,7 @@ const dheCipher = 'DHE-RSA-AES128-SHA256';
 const ecdheCipher = 'ECDHE-RSA-AES128-SHA256';
 const ciphers = `${dheCipher}:${ecdheCipher}`;
 
-if (!common.hasOpenSSL(3, 2)) {
+if (secLevel < 2) {
   // Test will emit a warning because the DH parameter size is < 2048 bits
   // when the test is run on versions lower than OpenSSL32
   common.expectWarning('SecurityWarning',
@@ -107,7 +109,9 @@ function testCustomParam(keylen, expectedCipher) {
   }, /DH parameter is less than 1024 bits/);
 
   // Custom DHE parameters are supported (but discouraged).
-  if (!common.hasOpenSSL(3, 2)) {
+  // 1024 is disallowed at security level 2 and above so use 3072 instead
+  // for higher security levels
+  if (secLevel < 2) {
     await testCustomParam(1024, dheCipher);
   } else {
     await testCustomParam(3072, dheCipher);

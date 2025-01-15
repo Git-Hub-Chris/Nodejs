@@ -511,7 +511,7 @@ X509_STORE* NewRootCertStore() {
         ReadSystemStoreCertificates(&combined_root_certs);
       }
 
-      for (size_t i = 0; i < arraysize(root_certs); i++) {
+      for (size_t i = 0; i < combined_root_certs.size(); i++) {
         X509* x509 = PEM_read_bio_X509(
             NodeBIO::NewFixed(combined_root_certs[i].data(),
                               combined_root_certs[i].length())

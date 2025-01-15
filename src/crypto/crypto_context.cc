@@ -228,21 +228,6 @@ unsigned long LoadCertsFromFile(  // NOLINT(runtime/int)
 
 enum TrustStatus { UNSPECIFIED, TRUSTED, DISTRUSTED };
 
-std::string stdStringFromCF(CFStringRef s) {
-  if (auto fastCString = CFStringGetCStringPtr(s, kCFStringEncodingUTF8)) {
-    return std::string(fastCString);
-  }
-  auto utf16length = CFStringGetLength(s);
-  auto maxUtf8len = CFStringGetMaximumSizeForEncoding(utf16length,
-                                                      kCFStringEncodingUTF8);
-  std::string converted(maxUtf8len, '\0');
-
-  CFStringGetCString(s, converted.data(), maxUtf8len, kCFStringEncodingUTF8);
-  converted.resize(std::strlen(converted.data()));
-
-  return converted;
-}
-
 std::string getX509Name(X509_NAME* x509_name) {
   ClearErrorOnReturn clearErrorOnReturn;
   if (x509_name == nullptr) return {};
@@ -425,27 +410,23 @@ void ReadMacOSKeychainCertificates(
     SecCertificateRef certRef = (SecCertificateRef) CFArrayGetValueAtIndex(
         currAnchors, i);
 
-    CFStringRef certSummary = SecCertificateCopySubjectSummary(certRef);
-    std::string stdCertSummary = stdStringFromCF(certSummary);
+    CFDataRef derData = SecCertificateCopyData(certRef);
+    if (!derData) {
+      fprintf(stderr, "ERROR: SecCertificateCopyData failed\n");
+      continue;
+    }
+    auto dataBufferPointer = CFDataGetBytePtr(derData);
 
-      CFDataRef derData = SecCertificateCopyData(certRef);
-      if (!derData) {
-        fprintf(stderr, "ERROR: SecCertificateCopyData failed\n");
-        continue;
-      }
-      auto dataBufferPointer = CFDataGetBytePtr(derData);
-
-      X509* cert =
-        d2i_X509(nullptr, &dataBufferPointer, CFDataGetLength(derData));
-      CFRelease(derData);
+    X509* cert =
+      d2i_X509(nullptr, &dataBufferPointer, CFDataGetLength(derData));
+    CFRelease(derData);
     bool isValid = IsCertificateTrustedForPolicy(cert, certRef);
     if (isValid) {
       system_root_certificates_X509.emplace_back(cert);
     }
   }
 
-
-  for (size_t i = 0; i < system_root_certificates_X509.size(); i++) {
+x  for (size_t i = 0; i < system_root_certificates_X509.size(); i++) {
     BIOPointer bio(BIO_new(BIO_s_mem()));
     CHECK(bio);
 

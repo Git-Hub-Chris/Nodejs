@@ -262,8 +262,8 @@ std::string getCertIssuer(X509* cert) {
   BIO_read(bio, issuer, resultLen);
   BIO_free_all(bio);
 
-  std::string str(issuer);
-  return str;
+  std::string strResult = issuer;
+  return strResult;
 }
 
 std::string getCertSubject(X509* cert) {
@@ -284,8 +284,8 @@ std::string getCertSubject(X509* cert) {
   BIO_read(bio, issuer, resultLen);
   BIO_free_all(bio);
 
-  std::string str(issuer);
-  return str;
+  std::string strResult = issuer;
+  return strResult;
 }
 
 bool IsSelfSigned(X509* cert) {

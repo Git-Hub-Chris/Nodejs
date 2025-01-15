@@ -304,7 +304,7 @@ enum TrustStatus IsTrustDictionaryTrustedForPolicy(
   return UNSPECIFIED;
 }
 
-bool IsTrustSettingsTrustedForPolicy(CFArrayRef trustSettings,
+enum TrustStatus IsTrustSettingsTrustedForPolicy(CFArrayRef trustSettings,
                                             bool isSelfIssued) {
   // The trustSettings parameter can return a valid but empty CFArrayRef.
   // This empty trust-settings array means “always trust this certificate”
@@ -312,7 +312,7 @@ bool IsTrustSettingsTrustedForPolicy(CFArrayRef trustSettings,
   // kSecTrustSettingsResultTrustRoot
   if (CFArrayGetCount(trustSettings) == 0) {
     if (isSelfIssued) {
-      return true;
+      return TRUSTED;
     }
   }
 
@@ -325,12 +325,12 @@ bool IsTrustSettingsTrustedForPolicy(CFArrayRef trustSettings,
     enum TrustStatus trust = IsTrustDictionaryTrustedForPolicy(trustDict);
 
     if (trust == DISTRUSTED) {
-      return false;
+      return trust;
     } else if (trust == TRUSTED) {
-      return true;
+      return trust;
     }
   }
-  return false;
+  return UNSPECIFIED;
 }
 
 bool IsCertificateTrustValid(SecCertificateRef ref) {
@@ -344,26 +344,30 @@ bool IsCertificateTrustValid(SecCertificateRef ref) {
   bool result = false;
   if (ortn) {
     /* should never happen */
-    goto errOut;
+    goto done;
   }
 
   result = SecTrustEvaluateWithError(secTrust, nullptr);
-  errOut:
-     if (policy) {
-       CFRelease(policy);
-     }
-  if (secTrust) {
-    CFRelease(secTrust);
-  }
-  if (subjCerts) {
-    CFRelease(subjCerts);
-  }
-  return result;
+  done:
+    if (policy) {
+      CFRelease(policy);
+    }
+    if (secTrust) {
+      CFRelease(secTrust);
+    }
+    if (subjCerts) {
+      CFRelease(subjCerts);
+    }
+    return result;
 }
 
 bool IsCertificateTrustedForPolicy(X509* cert, SecCertificateRef ref) {
   OSStatus err;
 
+  bool trustEvaluated = false;
+
+  // Evaluate user trust domain, then admin. User settings can override
+  // admin (and both override the system domain, but we don't check that).
   for (const auto& trust_domain :
        {kSecTrustSettingsDomainUser, kSecTrustSettingsDomainAdmin}) {
     CFArrayRef trustSettings;
@@ -372,15 +376,29 @@ bool IsCertificateTrustedForPolicy(X509* cert, SecCertificateRef ref) {
     bool isSelfSigned = IsSelfSigned(cert);
 
     if (err == errSecSuccess && trustSettings != nullptr) {
-      return IsTrustSettingsTrustedForPolicy(trustSettings, isSelfSigned);
+      TrustStatus result = IsTrustSettingsTrustedForPolicy(
+          trustSettings, isSelfSigned);
+      if (result != UNSPECIFIED) {
+        CFRelease(trustSettings);
+        return result == TRUSTED;
+      }
     }
 
     // An empty trust settings array isn’t the same as no trust settings,
     // where the trustSettings parameter returns NULL.
     // No trust-settings array means
     // “this certificate must be verifiable using a known trusted certificate”.
-    if (trustSettings == nullptr) {
-      return IsCertificateTrustValid(ref);
+    if (trustSettings == nullptr && !trustEvaluated) {
+      bool result = IsCertificateTrustValid(ref);
+      if (result) {
+        return true;
+      }
+      // no point re-evaluating this in the admin domain
+      trustEvaluated = true;
+    } else {
+      if (trustSettings) {
+        CFRelease(trustSettings);
+      }
     }
   }
   return false;
@@ -399,6 +417,7 @@ void ReadMacOSKeychainCertificates(
   OSStatus ortn = SecItemCopyMatching(
       search,
       reinterpret_cast<CFTypeRef *>(&currAnchors));
+  CFRelease(search);
 
   if (ortn) {
       fprintf(stderr, "ERROR: SecItemCopyMatching failed %d\n", ortn);
@@ -426,6 +445,7 @@ void ReadMacOSKeychainCertificates(
       system_root_certificates_X509.emplace_back(cert);
     }
   }
+  CFRelease(currAnchors);
 
   for (size_t i = 0; i < system_root_certificates_X509.size(); i++) {
     BIOPointer bio(BIO_new(BIO_s_mem()));

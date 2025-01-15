@@ -41,6 +41,7 @@ using v8::Integer;
 using v8::Isolate;
 using v8::JustVoid;
 using v8::Local;
+using v8::LocalVector;
 using v8::Maybe;
 using v8::Nothing;
 using v8::Object;
@@ -534,7 +535,7 @@ void GetRootCertificates(const FunctionCallbackInfo<Value>& args) {
     ReadSystemStoreCertificates(&combined_root_certs);
   }
 
-  std::vector<Local<Value>> result(combined_root_certs.size());
+  LocalVector<Value> result(env->isolate(), combined_root_certs.size());
 
   for (size_t i = 0; i < combined_root_certs.size(); i++) {
     if (!String::NewFromOneByte(

@@ -426,7 +426,7 @@ void ReadMacOSKeychainCertificates(
     }
   }
 
-x  for (size_t i = 0; i < system_root_certificates_X509.size(); i++) {
+  for (size_t i = 0; i < system_root_certificates_X509.size(); i++) {
     BIOPointer bio(BIO_new(BIO_s_mem()));
     CHECK(bio);
 

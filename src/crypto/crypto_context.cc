@@ -19,7 +19,6 @@
 #include <openssl/engine.h>
 #endif  // !OPENSSL_NO_ENGINE
 #ifdef __APPLE__
-#include <CoreFoundation/CoreFoundation.h>
 #include <Security/Security.h>
 #endif
 

@@ -243,40 +243,19 @@ std::string stdStringFromCF(CFStringRef s) {
   return converted;
 }
 
-std::string getCertIssuer(X509* cert) {
+std::string getX509Name(X509_NAME* x509_name) {
   ClearErrorOnReturn clearErrorOnReturn;
-  if (cert == nullptr) return {};
+  if (x509_name == nullptr) return {};
+
   BIO* bio = BIO_new(BIO_s_mem());
   if (bio == nullptr) {
     return nullptr;
   }
+
   if (X509_NAME_print_ex(
-          bio, X509_get_issuer_name(cert), 0, XN_FLAG_ONELINE) <=
-      0) {
+          bio, x509_name, 0, XN_FLAG_ONELINE) <= 0) {
     return {};
-      }
-
-  const int resultLen = BIO_pending(bio);
-  char* issuer = reinterpret_cast<char *>(calloc(resultLen + 1, 1));
-  BIO_read(bio, issuer, resultLen);
-  BIO_free_all(bio);
-
-  std::string strResult = issuer;
-  return strResult;
-}
-
-std::string getCertSubject(X509* cert) {
-  ClearErrorOnReturn clearErrorOnReturn;
-  if (cert == nullptr) return {};
-  BIO* bio = BIO_new(BIO_s_mem());
-  if (bio == nullptr) {
-    return nullptr;
   }
-  if (X509_NAME_print_ex(
-          bio, X509_get_subject_name(cert), 0, XN_FLAG_ONELINE) <=
-      0) {
-    return {};
-      }
 
   const int resultLen = BIO_pending(bio);
   char* issuer = reinterpret_cast<char *>(calloc(resultLen + 1, 1));
@@ -288,8 +267,8 @@ std::string getCertSubject(X509* cert) {
 }
 
 bool IsSelfSigned(X509* cert) {
-  auto issuerName = getCertIssuer(cert);
-  auto subjectName = getCertSubject(cert);
+  auto issuerName = getX509Name(X509_get_issuer_name(cert));
+  auto subjectName = getX509Name(X509_get_subject_name(cert));
 
   if (issuerName == subjectName) {
     return true;

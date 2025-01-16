@@ -252,11 +252,32 @@ std::string getX509Name(X509_NAME* x509_name) {
   return strResult;
 }
 
-bool IsSelfSigned(X509* cert) {
-  auto issuerName = getX509Name(X509_get_issuer_name(cert));
-  auto subjectName = getX509Name(X509_get_subject_name(cert));
+char* bioToCString(BIOPointer* bio) {
+  const int len = BIO_pending(bio->get());
+  char* result = reinterpret_cast<char *>(calloc(len + 1, 1));
+  BIO_read(bio->get(), result, len);
 
-  if (issuerName == subjectName) {
+  return result;
+}
+
+char* getIssuer(ncrypto::X509View x509_view) {
+  auto bio = x509_view.getIssuer();
+
+  return bioToCString(&bio);
+}
+
+char* getSubject(ncrypto::X509View x509_view) {
+  auto bio = x509_view.getSubject();
+
+  return bioToCString(&bio);
+}
+
+bool IsSelfSigned(X509* cert) {
+  ncrypto::X509View x509_view(cert);
+  auto subject = getSubject(x509_view);
+  auto issuer = getIssuer(x509_view);
+
+  if (strcmp(subject, issuer) == 0) {
     return true;
   } else {
     return false;

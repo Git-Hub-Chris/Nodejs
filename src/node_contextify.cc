@@ -140,7 +140,7 @@ BaseObjectPtr<ContextifyContext> ContextifyContext::New(
   if (!(CreateV8Context(env->isolate(), object_template, snapshot_data, queue)
             .ToLocal(&v8_context))) {
     // Allocation failure, maximum call stack size reached, termination, etc.
-    return BaseObjectPtr<ContextifyContext>();
+    return nullptr;
   }
   return New(v8_context, env, sandbox_obj, options);
 }
@@ -263,7 +263,7 @@ BaseObjectPtr<ContextifyContext> ContextifyContext::New(
   // things down significantly and they are only needed in rare occasions
   // in the vm contexts.
   if (InitializeContextRuntime(v8_context).IsNothing()) {
-    return BaseObjectPtr<ContextifyContext>();
+    return nullptr;
   }
 
   Local<Context> main_context = env->context();
@@ -315,7 +315,7 @@ BaseObjectPtr<ContextifyContext> ContextifyContext::New(
                   ctor_name,
                   static_cast<v8::PropertyAttribute>(v8::DontEnum))
               .IsNothing()) {
-        return BaseObjectPtr<ContextifyContext>();
+        return nullptr;
       }
     }
 
@@ -328,7 +328,7 @@ BaseObjectPtr<ContextifyContext> ContextifyContext::New(
                          env->host_defined_option_symbol(),
                          options->host_defined_options_id)
             .IsNothing()) {
-      return BaseObjectPtr<ContextifyContext>();
+      return nullptr;
     }
 
     env->AssignToContext(v8_context, nullptr, info);
@@ -336,7 +336,7 @@ BaseObjectPtr<ContextifyContext> ContextifyContext::New(
     if (!env->contextify_wrapper_template()
              ->NewInstance(v8_context)
              .ToLocal(&wrapper)) {
-      return BaseObjectPtr<ContextifyContext>();
+      return nullptr;
     }
 
     result =
@@ -352,7 +352,7 @@ BaseObjectPtr<ContextifyContext> ContextifyContext::New(
           ->SetPrivate(
               v8_context, env->contextify_context_private_symbol(), wrapper)
           .IsNothing()) {
-    return BaseObjectPtr<ContextifyContext>();
+    return nullptr;
   }
 
   // Assign host_defined_options_id to the sandbox object or the global object
@@ -364,7 +364,7 @@ BaseObjectPtr<ContextifyContext> ContextifyContext::New(
                        env->host_defined_option_symbol(),
                        options->host_defined_options_id)
           .IsNothing()) {
-    return BaseObjectPtr<ContextifyContext>();
+    return nullptr;
   }
   return result;
 }

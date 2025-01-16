@@ -229,29 +229,6 @@ unsigned long LoadCertsFromFile(  // NOLINT(runtime/int)
 
 enum TrustStatus { UNSPECIFIED, TRUSTED, DISTRUSTED };
 
-std::string getX509Name(X509_NAME* x509_name) {
-  ClearErrorOnReturn clearErrorOnReturn;
-  if (x509_name == nullptr) return {};
-
-  BIO* bio = BIO_new(BIO_s_mem());
-  if (bio == nullptr) {
-    return nullptr;
-  }
-
-  if (X509_NAME_print_ex(
-          bio, x509_name, 0, XN_FLAG_ONELINE) <= 0) {
-    return {};
-  }
-
-  const int resultLen = BIO_pending(bio);
-  char* issuer = reinterpret_cast<char *>(calloc(resultLen + 1, 1));
-  BIO_read(bio, issuer, resultLen);
-  BIO_free_all(bio);
-
-  std::string strResult = issuer;
-  return strResult;
-}
-
 char* bioToCString(BIOPointer* bio) {
   const int len = BIO_pending(bio->get());
   char* result = reinterpret_cast<char *>(calloc(len + 1, 1));

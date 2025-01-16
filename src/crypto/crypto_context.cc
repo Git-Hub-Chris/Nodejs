@@ -446,19 +446,16 @@ void ReadMacOSKeychainCertificates(
   CFRelease(currAnchors);
 
   for (size_t i = 0; i < system_root_certificates_X509.size(); i++) {
-    BIOPointer bio(BIO_new(BIO_s_mem()));
-    CHECK(bio);
+    ncrypto::X509View x509_view(system_root_certificates_X509[i]);
 
-    BUF_MEM* mem = nullptr;
-    int result = PEM_write_bio_X509(bio.get(),
-                                    system_root_certificates_X509[i]);
-    if (!result) {
-      fprintf(stderr, "Warning: PEM_write_bio_X509 failed with: %d", result);
+    auto pemBio = x509_view.toPEM();
+    if (!pemBio) {
+      fprintf(stderr, "Warning: converting to pem failed");
       continue;
     }
 
-    BIO_get_mem_ptr(bio.get(), &mem);
-    std::string certificate_string_pem(mem->data, mem->length);
+    auto pemCString = bioToCString(&pemBio);
+    std::string certificate_string_pem = pemCString;
 
     system_root_certificates->emplace_back(certificate_string_pem);
   }

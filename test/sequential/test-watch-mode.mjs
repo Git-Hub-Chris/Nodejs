@@ -104,7 +104,7 @@ async function runWriteSucceed({
   if (watchFlag !== null) args.unshift(watchFlag);
   const child = spawn(execPath, args, { encoding: 'utf8', stdio: 'pipe', ...options });
   let completes = 0;
-  let cancelRestarts = () => {};
+  let cancelRestarts = () => { };
   let stderr = '';
   const stdout = [];
 
@@ -141,7 +141,7 @@ async function runWriteSucceed({
 
 async function failWriteSucceed({ file, watchedFile }) {
   const child = spawn(execPath, ['--watch', '--no-warnings', file], { encoding: 'utf8', stdio: 'pipe' });
-  let cancelRestarts = () => {};
+  let cancelRestarts = () => { };
 
   try {
     // Break the chunks into lines
@@ -164,9 +164,11 @@ tmpdir.refresh();
 describe('watch mode', { concurrency: !process.env.TEST_PARALLEL, timeout: 60_000 }, () => {
   it('should watch changes to a file', async () => {
     const file = createTmpFile();
-    const { stderr, stdout } = await runWriteSucceed({ file, watchedFile: file, watchFlag: '--watch=true', options: {
-      timeout: 10000
-    } });
+    const { stderr, stdout } = await runWriteSucceed({
+      file, watchedFile: file, watchFlag: '--watch=true', options: {
+        timeout: 10000
+      }
+    });
 
     assert.strictEqual(stderr, '');
     assert.deepStrictEqual(stdout, [
@@ -192,55 +194,57 @@ describe('watch mode', { concurrency: !process.env.TEST_PARALLEL, timeout: 60_00
     ]);
   });
 
-  it('should reload env variables when --env-file changes', async () => {
-    const envKey = `TEST_ENV_${Date.now()}`;
-    const jsFile = createTmpFile(`console.log('ENV: ' + process.env.${envKey});`);
-    const envFile = createTmpFile(`${envKey}=value1`, '.env');
-    const { done, restart } = runInBackground({ args: ['--watch', `--env-file=${envFile}`, jsFile] });
+  for (const cmd in ['--env-file', '--env-file-if-exists']) {
+    it(`should reload env variables when ${cmd} changes`, async () => {
+      const envKey = `TEST_ENV_${Date.now()}`;
+      const jsFile = createTmpFile(`console.log('ENV: ' + process.env.${envKey});`);
+      const envFile = createTmpFile(`${envKey}=value1`, '.env');
+      const { done, restart } = runInBackground({ args: ['--watch', `${cmd}=${envFile}`, jsFile] });
 
-    try {
-      await restart();
-      writeFileSync(envFile, `${envKey}=value2`);
+      try {
+        await restart();
+        writeFileSync(envFile, `${envKey}=value2`);
 
-      // Second restart, after env change
-      const { stdout, stderr } = await restart();
+        // Second restart, after env change
+        const { stdout, stderr } = await restart();
 
-      assert.strictEqual(stderr, '');
-      assert.deepStrictEqual(stdout, [
-        `Restarting ${inspect(jsFile)}`,
-        'ENV: value2',
-        `Completed running ${inspect(jsFile)}`,
-      ]);
-    } finally {
-      await done();
-    }
-  });
+        assert.strictEqual(stderr, '');
+        assert.deepStrictEqual(stdout, [
+          `Restarting ${inspect(jsFile)}`,
+          'ENV: value2',
+          `Completed running ${inspect(jsFile)}`,
+        ]);
+      } finally {
+        await done();
+      }
+    });
 
-  it('should load new env variables when --env-file changes', async () => {
-    const envKey = `TEST_ENV_${Date.now()}`;
-    const envKey2 = `TEST_ENV_2_${Date.now()}`;
-    const jsFile = createTmpFile(`console.log('ENV: ' + process.env.${envKey} + '\\n' + 'ENV2: ' + process.env.${envKey2});`);
-    const envFile = createTmpFile(`${envKey}=value1`, '.env');
-    const { done, restart } = runInBackground({ args: ['--watch', `--env-file=${envFile}`, jsFile] });
+    it(`should load new env variables when ${cmd} changes`, async () => {
+      const envKey = `TEST_ENV_${Date.now()}`;
+      const envKey2 = `TEST_ENV_2_${Date.now()}`;
+      const jsFile = createTmpFile(`console.log('ENV: ' + process.env.${envKey} + '\\n' + 'ENV2: ' + process.env.${envKey2});`);
+      const envFile = createTmpFile(`${envKey}=value1`, '.env');
+      const { done, restart } = runInBackground({ args: ['--watch', `${cmd}=${envFile}`, jsFile] });
 
-    try {
-      await restart();
-      writeFileSync(envFile, `${envKey}=value1\n${envKey2}=newValue`);
+      try {
+        await restart();
+        writeFileSync(envFile, `${envKey}=value1\n${envKey2}=newValue`);
 
-      // Second restart, after env change
-      const { stderr, stdout } = await restart();
+        // Second restart, after env change
+        const { stderr, stdout } = await restart();
 
-      assert.strictEqual(stderr, '');
-      assert.deepStrictEqual(stdout, [
-        `Restarting ${inspect(jsFile)}`,
-        'ENV: value1',
-        'ENV2: newValue',
-        `Completed running ${inspect(jsFile)}`,
-      ]);
-    } finally {
-      await done();
-    }
-  });
+        assert.strictEqual(stderr, '');
+        assert.deepStrictEqual(stdout, [
+          `Restarting ${inspect(jsFile)}`,
+          'ENV: value1',
+          'ENV2: newValue',
+          `Completed running ${inspect(jsFile)}`,
+        ]);
+      } finally {
+        await done();
+      }
+    });
+  }
 
   it('should watch changes to a failing file', async () => {
     const file = createTmpFile('throw new Error("fails");');

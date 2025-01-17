@@ -250,11 +250,10 @@ char* getSubject(ncrypto::X509View x509_view) {
 }
 
 bool IsSelfSigned(X509* cert) {
-  ncrypto::X509View x509_view(cert);
-  auto subject = getSubject(x509_view);
-  auto issuer = getIssuer(x509_view);
+  auto subject = X509_get_subject_name(cert);
+  auto issuer = X509_get_issuer_name(cert);
 
-  if (strcmp(subject, issuer) == 0) {
+  if (X509_NAME_cmp(subject, issuer) == 0) {
     return true;
   } else {
     return false;
@@ -363,6 +362,7 @@ bool IsCertificateTrustedForPolicy(X509* cert, SecCertificateRef ref) {
   OSStatus err;
 
   bool trustEvaluated = false;
+  bool isSelfSigned = IsSelfSigned(cert);
 
   // Evaluate user trust domain, then admin. User settings can override
   // admin (and both override the system domain, but we don't check that).
@@ -370,8 +370,6 @@ bool IsCertificateTrustedForPolicy(X509* cert, SecCertificateRef ref) {
        {kSecTrustSettingsDomainUser, kSecTrustSettingsDomainAdmin}) {
     CFArrayRef trustSettings;
     err = SecTrustSettingsCopyTrustSettings(ref, trust_domain, &trustSettings);
-
-    bool isSelfSigned = IsSelfSigned(cert);
 
     if (err == errSecSuccess && trustSettings != nullptr) {
       TrustStatus result = IsTrustSettingsTrustedForPolicy(

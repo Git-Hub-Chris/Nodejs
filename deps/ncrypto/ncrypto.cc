@@ -3721,4 +3721,85 @@ bool extractP1363(const Buffer<const unsigned char>& buf,
          BignumPointer::EncodePaddedInto(asn1_sig.s(), dest + n, n) > 0;
 }
 
+// ============================================================================
+
+HMACCtxPointer::HMACCtxPointer() : ctx_(nullptr) {}
+
+HMACCtxPointer::HMACCtxPointer(HMAC_CTX* ctx) : ctx_(ctx) {}
+
+HMACCtxPointer::HMACCtxPointer(HMACCtxPointer&& other) noexcept
+    : ctx_(other.release()) {}
+
+HMACCtxPointer& HMACCtxPointer::operator=(HMACCtxPointer&& other) noexcept {
+  ctx_.reset(other.release());
+  return *this;
+}
+
+HMACCtxPointer::~HMACCtxPointer() {
+  reset();
+}
+
+void HMACCtxPointer::reset(HMAC_CTX* ctx) {
+  ctx_.reset(ctx);
+}
+
+HMAC_CTX* HMACCtxPointer::release() {
+  return ctx_.release();
+}
+
+bool HMACCtxPointer::init(const Buffer<const void>& buf, const EVP_MD* md) {
+  if (!ctx_) return false;
+  return HMAC_Init_ex(ctx_.get(), buf.data, buf.len, md, nullptr) == 1;
+}
+
+bool HMACCtxPointer::update(const Buffer<const void>& buf) {
+  if (!ctx_) return false;
+  return HMAC_Update(ctx_.get(),
+                     static_cast<const unsigned char*>(buf.data),
+                     buf.len) == 1;
+}
+
+DataPointer HMACCtxPointer::digest() {
+  auto data = DataPointer::Alloc(EVP_MAX_MD_SIZE);
+  if (!data) return {};
+  Buffer<void> buf = data;
+  if (!digestInto(&buf)) return {};
+  return data.resize(buf.len);
+}
+
+bool HMACCtxPointer::digestInto(Buffer<void>* buf) {
+  if (!ctx_) return false;
+
+  unsigned int len = buf->len;
+  if (!HMAC_Final(ctx_.get(), static_cast<unsigned char*>(buf->data), &len)) {
+    return false;
+  }
+  buf->len = len;
+  return true;
+}
+
+HMACCtxPointer HMACCtxPointer::New() {
+  return HMACCtxPointer(HMAC_CTX_new());
+}
+
+DataPointer hashDigest(const Buffer<const unsigned char>& buf,
+                       const EVP_MD* md) {
+  if (md == nullptr) return {};
+  size_t md_len = EVP_MD_size(md);
+  unsigned int result_size;
+  auto data = DataPointer::Alloc(md_len);
+  if (!data) return {};
+
+  if (!EVP_Digest(buf.data,
+                  buf.len,
+                  reinterpret_cast<unsigned char*>(data.get()),
+                  &result_size,
+                  md,
+                  nullptr)) {
+    return {};
+  }
+
+  return data.resize(result_size);
+}
+
 }  // namespace ncrypto

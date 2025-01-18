@@ -201,7 +201,6 @@ struct FunctionDeleter {
 template <typename T, void (*function)(T*)>
 using DeleteFnPtr = typename FunctionDeleter<T, function>::Pointer;
 
-using HMACCtxPointer = DeleteFnPtr<HMAC_CTX, HMAC_CTX_free>;
 using PKCS8Pointer = DeleteFnPtr<PKCS8_PRIV_KEY_INFO, PKCS8_PRIV_KEY_INFO_free>;
 using RSAPointer = DeleteFnPtr<RSA, RSA_free>;
 using SSLSessionPointer = DeleteFnPtr<SSL_SESSION, SSL_SESSION_free>;
@@ -238,6 +237,9 @@ struct Buffer {
   T* data = nullptr;
   size_t len = 0;
 };
+
+DataPointer hashDigest(const Buffer<const unsigned char>& data,
+                       const EVP_MD* md);
 
 class Cipher final {
  public:
@@ -1183,6 +1185,33 @@ class EVPMDCtxPointer final {
 
  private:
   DeleteFnPtr<EVP_MD_CTX, EVP_MD_CTX_free> ctx_;
+};
+
+class HMACCtxPointer final {
+ public:
+  HMACCtxPointer();
+  explicit HMACCtxPointer(HMAC_CTX* ctx);
+  HMACCtxPointer(HMACCtxPointer&& other) noexcept;
+  HMACCtxPointer& operator=(HMACCtxPointer&& other) noexcept;
+  NCRYPTO_DISALLOW_COPY(HMACCtxPointer)
+  ~HMACCtxPointer();
+
+  inline bool operator==(std::nullptr_t) noexcept { return ctx_ == nullptr; }
+  inline operator bool() const { return ctx_ != nullptr; }
+  inline HMAC_CTX* get() const { return ctx_.get(); }
+  inline operator HMAC_CTX*() const { return ctx_.get(); }
+  void reset(HMAC_CTX* ctx = nullptr);
+  HMAC_CTX* release();
+
+  bool init(const Buffer<const void>& buf, const EVP_MD* md);
+  bool update(const Buffer<const void>& buf);
+  DataPointer digest();
+  bool digestInto(Buffer<void>* buf);
+
+  static HMACCtxPointer New();
+
+ private:
+  DeleteFnPtr<HMAC_CTX, HMAC_CTX_free> ctx_;
 };
 
 #ifndef OPENSSL_NO_ENGINE

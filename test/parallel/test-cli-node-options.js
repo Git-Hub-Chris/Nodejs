@@ -66,6 +66,9 @@ if (common.hasCrypto) {
   expectNoWorker('--use-bundled-ca', 'B\n');
   if (!common.hasOpenSSL3)
     expectNoWorker('--openssl-config=_ossl_cfg', 'B\n');
+  if (common.isMacOS) {
+    expectNoWorker('--use-system-ca', 'B\n');
+  }
 }
 
 // V8 options

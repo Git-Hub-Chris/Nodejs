@@ -239,7 +239,7 @@
     [ 'OS=="mac"', {
       # linking Corefoundation is needed since certain macOS debugging tools
       # like Instruments require it for some features
-      'libraries': [ '-framework CoreFoundation' ],
+      'libraries': [ '-framework CoreFoundation -framework Security' ],
       'defines!': [
         'NODE_PLATFORM="mac"',
       ],

@@ -3995,9 +3995,13 @@ This feature is not available in [`Worker`][] threads.
 added:
   - v16.6.0
   - v14.18.0
+changes:
+  - version: REPLACEME
+    pr-url: https://github.com/nodejs/node/pull/56639
+    description: the `process.setSourceMapsEnabled` has been deprecated.
 -->
 
-> Stability: 1 - Experimental
+> Stability: 0 - Deprecated: Use [`module.setSourceMapsSupport()`][] instead.
 
 * `val` {boolean}
 
@@ -4042,9 +4046,13 @@ Using this function is mutually exclusive with using the deprecated
 added:
   - v20.7.0
   - v18.19.0
+changes:
+  - version: REPLACEME
+    pr-url: https://github.com/nodejs/node/pull/56639
+    description: the `process.sourceMapsEnabled` has been deprecated.
 -->
 
-> Stability: 1 - Experimental
+> Stability: 0 - Deprecated: Use [`module.getSourceMapsSupport()`][] instead.
 
 * {boolean}
 
@@ -4511,7 +4519,9 @@ cases:
 [`console.error()`]: console.md#consoleerrordata-args
 [`console.log()`]: console.md#consolelogdata-args
 [`domain`]: domain.md
+[`module.getSourceMapsSupport()`]: module.md#modulegetsourcemapssupport
 [`module.isBuiltin(id)`]: module.md#moduleisbuiltinmodulename
+[`module.setSourceMapsSupport()`]: module.md#modulesetsourcemapssupportenabled-options
 [`net.Server`]: net.md#class-netserver
 [`net.Socket`]: net.md#class-netsocket
 [`os.constants.dlopen`]: os.md#dlopen-constants

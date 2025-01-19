@@ -415,6 +415,21 @@ function:
 * [`Buffer.from(arrayBuffer[, byteOffset[, length]])`][`Buffer.from(arrayBuf)`]
 * [`Buffer.from(string[, encoding])`][`Buffer.from(string)`]
 
+### Buffer methods are callable with `Uint8Array` instances
+
+All methods on the Buffer prototype are callable with a `Uint8Array` instance.
+
+```js
+const { toString, write } = Buffer.prototype;
+
+const uint8array = new Uint8Array(5);
+
+write.call(uint8array, 'hello', 0, 5, 'utf8'); // 5
+// <Uint8Array 68 65 6c 6c 6f>
+
+toString.call(uint8array, 'utf8'); // 'hello'
+```
+
 ## Buffers and iteration
 
 `Buffer` instances can be iterated over using `for..of` syntax:
@@ -2059,6 +2074,10 @@ console.log(buf.fill('zz', 'hex'));
 
 <!-- YAML
 added: v5.3.0
+changes:
+  - version: REPLACEME
+    pr-url: https://github.com/nodejs/node/pull/56578
+    description: supports Uint8Array as `this` value.
 -->
 
 * `value` {string|Buffer|Uint8Array|integer} What to search for.
@@ -2946,10 +2965,14 @@ console.log(buf.readInt32LE(1));
 <!-- YAML
 added: v0.11.15
 changes:
+  - version: REPLACEME
+    pr-url: https://github.com/nodejs/node/pull/56578
+    description: supports Uint8Array as `this` value.
   - version: v10.0.0
     pr-url: https://github.com/nodejs/node/pull/18395
     description: Removed `noAssert` and no implicit coercion of the offset
                  and `byteLength` to `uint32` anymore.
+
 -->
 
 * `offset` {integer} Number of bytes to skip before starting to read. Must
@@ -2993,10 +3016,14 @@ console.log(buf.readIntBE(1, 0).toString(16));
 <!-- YAML
 added: v0.11.15
 changes:
+  - version: REPLACEME
+    pr-url: https://github.com/nodejs/node/pull/56578
+    description: supports Uint8Array as `this` value.
   - version: v10.0.0
     pr-url: https://github.com/nodejs/node/pull/18395
     description: Removed `noAssert` and no implicit coercion of the offset
                  and `byteLength` to `uint32` anymore.
+
 -->
 
 * `offset` {integer} Number of bytes to skip before starting to read. Must
@@ -3270,6 +3297,9 @@ console.log(buf.readUInt32LE(1).toString(16));
 <!-- YAML
 added: v0.11.15
 changes:
+  - version: REPLACEME
+    pr-url: https://github.com/nodejs/node/pull/56578
+    description: supports Uint8Array as `this` value.
   - version:
     - v14.9.0
     - v12.19.0
@@ -3320,6 +3350,9 @@ console.log(buf.readUIntBE(1, 6).toString(16));
 <!-- YAML
 added: v0.11.15
 changes:
+  - version: REPLACEME
+    pr-url: https://github.com/nodejs/node/pull/56578
+    description: supports Uint8Array as `this` value.
   - version:
     - v14.9.0
     - v12.19.0
@@ -3772,6 +3805,10 @@ console.log(copy);
 
 <!-- YAML
 added: v0.1.90
+changes:
+  - version: REPLACEME
+    pr-url: https://github.com/nodejs/node/pull/56578
+    description: supports Uint8Array as `this` value.
 -->
 
 * `encoding` {string} The character encoding to use. **Default:** `'utf8'`.
@@ -3910,6 +3947,10 @@ for (const value of buf) {
 
 <!-- YAML
 added: v0.1.90
+changes:
+  - version: REPLACEME
+    pr-url: https://github.com/nodejs/node/pull/56578
+    description: supports Uint8Array as `this` value.
 -->
 
 * `string` {string} String to write to `buf`.

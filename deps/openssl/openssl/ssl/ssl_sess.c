@@ -1164,10 +1164,18 @@ int SSL_set_session_ticket_ext(SSL *s, void *ext_data, int ext_len)
         }
 
         if (ext_data != NULL) {
+            if (s->ext.session_ticket == NULL) {
+                ERR_raise(ERR_LIB_SSL, ERR_R_INTERNAL_ERROR);
+                return 0;
+            }
             s->ext.session_ticket->length = ext_len;
             s->ext.session_ticket->data = s->ext.session_ticket + 1;
             memcpy(s->ext.session_ticket->data, ext_data, ext_len);
         } else {
+            if (s->ext.session_ticket == NULL) {
+                ERR_raise(ERR_LIB_SSL, ERR_R_INTERNAL_ERROR);
+                return 0;
+            }
             s->ext.session_ticket->length = 0;
             s->ext.session_ticket->data = NULL;
         }

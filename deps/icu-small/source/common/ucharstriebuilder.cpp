@@ -120,8 +120,13 @@ UCharsTrieBuilder::add(const UnicodeString &s, int32_t value, UErrorCode &errorC
             uprv_memcpy(newElements, elements, (size_t)elementsLength*sizeof(UCharsTrieElement));
         }
         delete[] elements;
+        elements = nullptr;
         elements=newElements;
         elementsCapacity=newCapacity;
+    }
+    if (elements == nullptr) {
+        errorCode = U_MEMORY_ALLOCATION_ERROR;
+        return *this;
     }
     elements[elementsLength++].setTo(s, value, strings, errorCode);
     if(U_SUCCESS(errorCode) && strings.isBogus()) {

@@ -40,7 +40,7 @@ h2Server.on('connect', (req, res) => {
 
 netServer.listen(0, common.mustCall(() => {
   const proxyClient = h2.connect(`https://localhost:${netServer.address().port}`, {
-    rejectUnauthorized: false
+    ca: fixtures.readKey('agent1-cert.pem') // Use self-signed certificate
   });
 
   const proxyReq = proxyClient.request({
@@ -55,7 +55,7 @@ netServer.listen(0, common.mustCall(() => {
     const tlsSocket = tls.connect({
       socket: proxyReq,
       ALPNProtocols: ['h2'],
-      rejectUnauthorized: false
+      ca: fixtures.readKey('agent1-cert.pem') // Use self-signed certificate
     });
 
     proxyReq.on('close', common.mustCall(() => {

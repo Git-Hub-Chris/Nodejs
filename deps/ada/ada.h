@@ -6733,7 +6733,7 @@ inline bool url_aggregator::has_non_empty_username() const noexcept {
 
 inline bool url_aggregator::has_non_empty_password() const noexcept {
   ada_log("url_aggregator::has_non_empty_password");
-  return components.host_start - components.username_end > 0;
+  return components.host_start > components.username_end;
 }
 
 inline bool url_aggregator::has_password() const noexcept {

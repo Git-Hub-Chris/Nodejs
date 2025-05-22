@@ -53,7 +53,7 @@ server.on('timeout', () => {
 
 server.listen(0, common.mustCall(() => {
   const client = http2.connect(`https://localhost:${server.address().port}`,
-                               { rejectUnauthorized: false });
+                               { ca: fixtures.readKey('agent1-cert.pem') });
 
   const req = client.request({ ':path': '/' });
   req.end();

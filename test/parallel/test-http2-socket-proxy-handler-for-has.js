@@ -23,8 +23,7 @@ const server = http2.createSecureServer(serverOptions, common.mustCall(
 server.listen(common.mustCall(() => {
   const port = server.address().port;
   const client = http2.connect('https://localhost:' + port, {
-    ca: fixtures.readKey('agent1-cert.pem'),
-    rejectUnauthorized: false
+    ca: fixtures.readKey('agent1-cert.pem')
   });
   const req = client.request({});
   req.on('response', common.mustCall((headers, flags) => {

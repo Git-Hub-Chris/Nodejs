@@ -39,7 +39,7 @@ h2Server.on('session', (session) => {
 
 netServer.listen(0, common.mustCall(() => {
   const proxyClient = h2.connect(`https://localhost:${netServer.address().port}`, {
-    rejectUnauthorized: false
+    ca: fixtures.readKey('agent1-cert.pem') // Trust the self-signed certificate
   });
 
   proxyClient.on('error', () => {});

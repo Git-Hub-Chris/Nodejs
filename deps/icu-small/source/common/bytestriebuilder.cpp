@@ -170,7 +170,8 @@ BytesTrieBuilder::add(StringPiece s, int32_t value, UErrorCode &errorCode) {
             uprv_memcpy(newElements, elements, (size_t)elementsLength*sizeof(BytesTrieElement));
         }
         delete[] elements;
-        elements=newElements;
+        elements = nullptr;
+        elements = newElements;
         elementsCapacity=newCapacity;
     }
     elements[elementsLength++].setTo(s, value, *strings, errorCode);

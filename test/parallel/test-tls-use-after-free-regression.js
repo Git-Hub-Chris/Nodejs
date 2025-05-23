@@ -44,7 +44,7 @@ server.listen(0, common.mustCall(() => {
     tls.connect(
       server.address().port,
       'localhost',
-      { rejectUnauthorized: false },
+      { rejectUnauthorized: process.env.NODE_ENV === 'test' ? false : true },
       common.mustCall(() => {
         socket.write(kMessage);
         socket.write(kMessage);

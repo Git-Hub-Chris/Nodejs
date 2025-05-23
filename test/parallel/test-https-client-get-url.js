@@ -25,8 +25,8 @@ const fixtures = require('../common/fixtures');
 if (!common.hasCrypto)
   common.skip('missing crypto');
 
-// Disable strict server certificate validation by the client
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+// Use a custom HTTPS agent to disable strict server certificate validation for specific requests
+const insecureAgent = new https.Agent({ rejectUnauthorized: false });
 
 const assert = require('assert');
 const https = require('https');
@@ -47,9 +47,9 @@ const server = https.createServer(options, common.mustCall((req, res) => {
 
 server.listen(0, common.mustCall(() => {
   const u = `https://${common.localhostIPv4}:${server.address().port}/foo?bar`;
-  https.get(u, common.mustCall(() => {
-    https.get(url.parse(u), common.mustCall(() => {
-      https.get(new URL(u), common.mustCall(() => {
+  https.get(u, { agent: insecureAgent }, common.mustCall(() => {
+    https.get(url.parse(u), { agent: insecureAgent }, common.mustCall(() => {
+      https.get(new URL(u), { agent: insecureAgent }, common.mustCall(() => {
         server.close();
       }));
     }));

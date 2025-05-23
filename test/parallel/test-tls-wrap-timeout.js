@@ -43,7 +43,8 @@ server.listen(0, () => {
 
     const tsocket = tls.connect({
       socket: socket,
-      rejectUnauthorized: false
+      rejectUnauthorized: true,
+      ca: fixtures.readKey('agent1-cert.pem') // Use the trusted CA certificate
     });
     tsocket.resume();
   });

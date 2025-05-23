@@ -45,12 +45,10 @@ function test(options) {
 
 test({
   port: undefined,
-  servername: 'c.another.com',
-  rejectUnauthorized: false
+  servername: 'c.another.com'
 });
 
 test({
   port: undefined,
-  servername: 'c.wrong.com',
-  rejectUnauthorized: false
+  servername: 'c.wrong.com'
 });

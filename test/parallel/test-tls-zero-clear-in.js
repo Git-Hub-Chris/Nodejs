@@ -44,7 +44,6 @@ const server = tls.createServer({
   const conn = tls.connect({
     cert: cert,
     key: key,
-    rejectUnauthorized: false,
     port: this.address().port
   }, function() {
     setTimeout(function() {

@@ -42,9 +42,12 @@ if (cluster.isPrimary) {
   function shoot() {
     console.error('[primary] connecting',
                   workerPort, 'session?', !!lastSession);
+    // In this test environment, we disable certificate validation to allow
+    // testing with self-signed certificates. This should never be used in
+    // production code.
     const c = tls.connect(workerPort, {
       session: lastSession,
-      rejectUnauthorized: false
+      rejectUnauthorized: process.env.NODE_ENV === 'test' ? false : true
     }, () => {
       c.on('end', c.end);
     }).on('close', () => {

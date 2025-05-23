@@ -45,6 +45,6 @@ server.listen(0, common.mustCall(function() {
   tls.connect({
     host: '127.0.0.1',
     port: this.address().port,
-    rejectUnauthorized: false
+    ca: [fixtures.readKey('agent1-cert.pem')]
   });
 }));

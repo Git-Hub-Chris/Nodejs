@@ -46,7 +46,7 @@ function connectClient(server) {
   const clientTlsSocket = tls.connect({
     host: 'localhost',
     port: server.address().port,
-    rejectUnauthorized: false
+    ca: cert // Use the server's certificate to establish trust
   });
 
   clientTlsSocket.write('.');

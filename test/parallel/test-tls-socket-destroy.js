@@ -27,7 +27,7 @@ const server = net.createServer(common.mustCall((conn) => {
 server.listen(0, function() {
   const options = {
     port: this.address().port,
-    rejectUnauthorized: false,
+    ca: fixtures.readKey('agent1-cert.pem'), // Use trusted self-signed certificate
   };
   tls.connect(options, function() {
     this.write('*'.repeat(1 << 20));  // Write more data than fits in a frame.

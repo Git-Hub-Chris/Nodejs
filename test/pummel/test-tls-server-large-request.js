@@ -62,7 +62,7 @@ const server = tls.Server(options, common.mustCall(function(socket) {
 server.listen(0, common.mustCall(() => {
   const client1 = tls.connect({
     port: server.address().port,
-    rejectUnauthorized: false,
+    ca: [fixtures.readKey('agent1-cert.pem')],
   }, common.mustCall(function() {
     client1.end(request);
   }));

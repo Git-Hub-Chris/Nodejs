@@ -50,7 +50,7 @@ const net = require('net');
     createDuplex(port).then((socket) => {
       const client = tls.connect({
         socket,
-        rejectUnauthorized: false,
+        ca: [fixtures.readKey('agent2-cert.pem')],
       }, common.mustCall(() => {
         assert.strictEqual(client.bufferSize, 0);
 

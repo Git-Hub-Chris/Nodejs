@@ -38,7 +38,7 @@ function main({ dur, size, securing }) {
         key: options.key,
         cert: options.cert,
         isServer: false,
-        rejectUnauthorized: false,
+        rejectUnauthorized: true, // Ensure certificate validation is enabled
         maxVersion: options.maxVersion,
       };
       const network = securing === 'clear' ? net : tls;

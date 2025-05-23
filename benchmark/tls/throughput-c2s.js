@@ -40,7 +40,10 @@ function main({ dur, type, size }) {
   const server = tls.createServer(options, onConnection);
   let conn;
   server.listen(common.PORT, () => {
-    const opt = { port: common.PORT, rejectUnauthorized: false };
+    const opt = { 
+      port: common.PORT, 
+      ca: fixtures.readKey('rsa_ca.crt') // Use the CA certificate for validation
+    };
     conn = tls.connect(opt, () => {
       setTimeout(done, dur * 1000);
       bench.start();

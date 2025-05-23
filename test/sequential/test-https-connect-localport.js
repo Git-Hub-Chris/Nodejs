@@ -25,7 +25,7 @@ const assert = require('assert');
       port,
       family: 4,
       localPort: common.PORT,
-      rejectUnauthorized: false,
+      ca: fixtures.readKey('agent1-cert.pem'),
     }, common.mustCall(() => {
       assert.strictEqual(req.socket.localPort, common.PORT);
       assert.strictEqual(req.socket.remotePort, port);

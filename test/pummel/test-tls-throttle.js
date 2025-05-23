@@ -49,7 +49,7 @@ let recvCount = 0;
 server.listen(0, function() {
   const client = tls.connect({
     port: server.address().port,
-    rejectUnauthorized: false,
+    ca: [fixtures.readKey('agent2-cert.pem')],
   });
 
   client.on('data', function(d) {

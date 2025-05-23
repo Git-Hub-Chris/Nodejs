@@ -43,7 +43,7 @@ function onConnection(conn) {
 function makeConnection() {
   const options = {
     port: common.PORT,
-    rejectUnauthorized: false,
+    rejectUnauthorized: true,
   };
   const conn = tls.connect(options, () => {
     clientConn++;

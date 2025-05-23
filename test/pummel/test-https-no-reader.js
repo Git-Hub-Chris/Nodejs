@@ -47,7 +47,7 @@ server.listen(0, function() {
   const req = https.request({
     method: 'POST',
     port: server.address().port,
-    rejectUnauthorized: false,
+    ca: fixtures.readKey('rsa_cert.crt'), // Use the test certificate as a trusted CA
   }, function(res) {
     res.read(0);
 

@@ -46,7 +46,7 @@ function main({ dur, type, sendchunklen, recvbuflen, recvbufgenfn }) {
 
   let socketOpts;
   if (recvbuf === undefined) {
-    socketOpts = { port: common.PORT, rejectUnauthorized: false };
+    socketOpts = { port: common.PORT, ca: fixtures.readKey('rsa_ca.crt') };
   } else {
     let buffer = recvbuf;
     if (recvbufgenfn === 'true') {
@@ -63,7 +63,7 @@ function main({ dur, type, sendchunklen, recvbuflen, recvbufgenfn }) {
     }
     socketOpts = {
       port: common.PORT,
-      rejectUnauthorized: false,
+      ca: fixtures.readKey('rsa_ca.crt'),
       onread: {
         buffer,
         callback: function(nread, buf) {

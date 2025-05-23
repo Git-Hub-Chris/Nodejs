@@ -75,7 +75,7 @@ test({
   cert: loadPEM('agent1-cert'),
   ca: [loadPEM('ca1-cert')],
   servername: 'a.example.com',
-  rejectUnauthorized: false
+  rejectUnauthorized: true
 },
      true,
      { sni: 'a.example.com', authorized: false },
@@ -88,7 +88,7 @@ test({
   cert: loadPEM('agent4-cert'),
   ca: [loadPEM('ca1-cert')],
   servername: 'a.example.com',
-  rejectUnauthorized: false
+  rejectUnauthorized: true
 },
      true,
      { sni: 'a.example.com', authorized: true },
@@ -101,7 +101,7 @@ test({
   cert: loadPEM('agent2-cert'),
   ca: [loadPEM('ca2-cert')],
   servername: 'b.example.com',
-  rejectUnauthorized: false
+  rejectUnauthorized: true
 },
      true,
      { sni: 'b.example.com', authorized: false },
@@ -114,7 +114,7 @@ test({
   cert: loadPEM('agent3-cert'),
   ca: [loadPEM('ca1-cert')],
   servername: 'c.wrong.com',
-  rejectUnauthorized: false
+  rejectUnauthorized: true
 },
      false,
      { sni: 'c.wrong.com', authorized: false },
@@ -127,7 +127,7 @@ test({
   cert: loadPEM('agent3-cert'),
   ca: [loadPEM('ca1-cert')],
   servername: 'c.another.com',
-  rejectUnauthorized: false
+  rejectUnauthorized: true
 },
      false,
      null,

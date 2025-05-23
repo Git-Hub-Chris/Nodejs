@@ -50,7 +50,6 @@ const server = https.createServer(httpsOptions, function(request, response) {
 
 server.listen(0, function() {
   const testURL = url.parse(`https://localhost:${this.address().port}`);
-  testURL.rejectUnauthorized = false;
 
   // make the request
   const clientRequest = https.request(testURL);

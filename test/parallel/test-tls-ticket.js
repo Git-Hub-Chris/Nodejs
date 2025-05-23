@@ -120,7 +120,7 @@ function start(callback) {
   function connect() {
     s = tls.connect(shared.address().port, {
       session: sess,
-      rejectUnauthorized: false
+      rejectUnauthorized: true
     }, function() {
       if (s.isSessionReused())
         ticketLog.push(s.getTLSTicket().toString('hex'));

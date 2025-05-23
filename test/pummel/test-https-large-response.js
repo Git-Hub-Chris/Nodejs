@@ -46,7 +46,7 @@ const server = https.createServer(options, common.mustCall(function(req, res) {
 server.listen(0, common.mustCall(function() {
   https.get({
     port: server.address().port,
-    rejectUnauthorized: false,
+    ca: fixtures.readKey('agent1-cert.pem'),
   }, common.mustCall(function(res) {
     console.log('response!');
 

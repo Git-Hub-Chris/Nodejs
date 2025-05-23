@@ -39,7 +39,6 @@ const server = net.createServer(common.mustCall((s) => {
 server.listen(0, common.mustCall(() => {
   const alpnOpts = {
     port: server.address().port,
-    rejectUnauthorized: false,
     ALPNProtocols: ['h2', 'http/1.1']
   };
 

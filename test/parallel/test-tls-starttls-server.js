@@ -38,6 +38,8 @@ const server = net.createServer(common.mustCall((s) => {
   const opts = {
     servername: 'test.test',
     port: server.address().port,
+    // Note: `rejectUnauthorized: false` is used here for testing purposes only.
+    // Do not use this setting in production as it disables certificate validation.
     rejectUnauthorized: false,
     requestOCSP: true
   };

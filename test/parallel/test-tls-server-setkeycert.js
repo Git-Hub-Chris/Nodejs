@@ -40,6 +40,8 @@ const altKeyCertVals = [
 
     tls.connect({
       port: this.address().port,
+      // Disabling certificate validation for testing purposes only.
+      // This should never be used in production environments.
       rejectUnauthorized: false,
       ALPNProtocols: ['acme-tls/1'],
     }, common.mustCall(function() {

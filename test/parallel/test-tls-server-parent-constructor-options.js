@@ -28,7 +28,7 @@ const options = {
   server.listen(0, common.mustCall(() => {
     const socket = tls.connect({
       port: server.address().port,
-      rejectUnauthorized: false
+      // Certificate validation is enabled by default.
     }, common.mustCall(() => {
       socket.end();
     }));
@@ -56,7 +56,7 @@ const options = {
   server.listen(0, common.mustCall(() => {
     const socket = tls.connect({
       port: server.address().port,
-      rejectUnauthorized: false
+      // Certificate validation is enabled by default.
     }, common.mustCall(() => {
       socket.end();
     }));

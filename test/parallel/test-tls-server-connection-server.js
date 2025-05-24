@@ -18,7 +18,7 @@ const server = tls.createServer(options, function(s) {
 }).listen(0, function() {
   const opts = {
     port: this.address().port,
-    rejectUnauthorized: false
+    ca: fixtures.readKey('agent1-cert.pem') // Use the server's certificate as the trusted CA
   };
 
   server.on('connection', common.mustCall(function(socket) {

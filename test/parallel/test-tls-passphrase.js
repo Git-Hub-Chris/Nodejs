@@ -231,7 +231,7 @@ assert.throws(function() {
     port: server.address().port,
     key: passKey,
     cert: cert,
-    rejectUnauthorized: false
+    // rejectUnauthorized: false // Removed for security
   });
 }, errMessageDecrypt);
 
@@ -240,7 +240,7 @@ assert.throws(function() {
     port: server.address().port,
     key: [passKey],
     cert: cert,
-    rejectUnauthorized: false
+    // rejectUnauthorized: false // Removed for security
   });
 }, errMessageDecrypt);
 
@@ -249,7 +249,7 @@ assert.throws(function() {
     port: server.address().port,
     key: [{ pem: passKey }],
     cert: cert,
-    rejectUnauthorized: false
+    // rejectUnauthorized: false // Removed for security
   });
 }, errMessageDecrypt);
 
@@ -260,7 +260,7 @@ assert.throws(function() {
     key: passKey,
     passphrase: 'invalid',
     cert: cert,
-    rejectUnauthorized: false
+    // rejectUnauthorized: false // Removed for security
   });
 }, errMessageDecrypt);
 
@@ -270,7 +270,7 @@ assert.throws(function() {
     key: [passKey],
     passphrase: 'invalid',
     cert: cert,
-    rejectUnauthorized: false
+    // rejectUnauthorized: false // Removed for security
   });
 }, errMessageDecrypt);
 
@@ -280,7 +280,7 @@ assert.throws(function() {
     key: [{ pem: passKey }],
     passphrase: 'invalid',
     cert: cert,
-    rejectUnauthorized: false
+    // rejectUnauthorized: false // Removed for security
   });
 }, errMessageDecrypt);
 
@@ -290,6 +290,6 @@ assert.throws(function() {
     key: [{ pem: passKey, passphrase: 'invalid' }],
     passphrase: 'password', // Valid but unused
     cert: cert,
-    rejectUnauthorized: false
+    // rejectUnauthorized: false // Removed for security
   });
 }, errMessageDecrypt);

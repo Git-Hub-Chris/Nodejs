@@ -25,7 +25,6 @@ const server = tls.createServer(options, common.mustCall((socket) => {
   let session = null;
 
   const client = tls.connect({
-    rejectUnauthorized: false,
     port: server.address().port,
   }, common.mustCall(() => {
     assert(!connected);

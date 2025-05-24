@@ -48,7 +48,8 @@ function doTest(testOptions, callback) {
     cert,
     ca: [cert],
     requestCert: true,
-    rejectUnauthorized: false,
+    // Disabling certificate validation for testing purposes only.
+    rejectUnauthorized: process.env.NODE_ENV === 'test' ? false : true,
     secureProtocol: 'TLS_method',
     ciphers: 'RSA@SECLEVEL=0'
   };

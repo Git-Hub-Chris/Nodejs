@@ -36,7 +36,7 @@ const serverOptions = {
   key: loadPEM('agent2-key'),
   cert: loadPEM('agent2-cert'),
   requestCert: true,
-  rejectUnauthorized: false,
+  rejectUnauthorized: true,
   SNICallback: function(servername, callback) {
     const context = SNIContexts[servername];
 

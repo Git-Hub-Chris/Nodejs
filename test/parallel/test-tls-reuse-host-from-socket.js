@@ -34,7 +34,7 @@ const server = tls.createServer({
   cert: fixtures.readKey('agent1-cert.pem')
 }).listen(0, common.mustCall(() => {
   const socket = net.connect(server.address().port, common.mustCall(() => {
-    const opts = { socket, rejectUnauthorized: false };
+    const opts = { socket };
     const secureSocket = tls.connect(opts, common.mustCall(() => {
       secureSocket.destroy();
       server.close();

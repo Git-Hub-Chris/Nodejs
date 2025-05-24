@@ -135,47 +135,41 @@ server.listen(0, common.mustCall(function() {
   tls.connect({
     port: this.address().port,
     key: [rawKey.toString()],
-    cert: [cert.toString()],
-    rejectUnauthorized: false
+    cert: [cert.toString()]
   }, onSecureConnect());
 
   tls.connect({
     port: this.address().port,
     key: [rawKey.toString()],
     passphrase: 'ignored',
-    cert: [cert.toString()],
-    rejectUnauthorized: false
+    cert: [cert.toString()]
   }, onSecureConnect());
 
   // Object[]
   tls.connect({
     port: this.address().port,
     key: [{ pem: passKey, passphrase: 'password' }],
-    cert: cert,
-    rejectUnauthorized: false
+    cert: cert
   }, onSecureConnect());
 
   tls.connect({
     port: this.address().port,
     key: [{ pem: passKey, passphrase: 'password' }],
     passphrase: 'ignored',
-    cert: cert,
-    rejectUnauthorized: false
+    cert: cert
   }, onSecureConnect());
 
   tls.connect({
     port: this.address().port,
     key: [{ pem: passKey }],
     passphrase: 'password',
-    cert: cert,
-    rejectUnauthorized: false
+    cert: cert
   }, onSecureConnect());
 
   tls.connect({
     port: this.address().port,
     key: [{ pem: passKey.toString(), passphrase: 'password' }],
-    cert: cert,
-    rejectUnauthorized: false
+    cert: cert
   }, onSecureConnect());
 
   tls.connect({

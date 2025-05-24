@@ -60,7 +60,7 @@ server.listen(0, () => {
     cert: loadPEM('agent1-cert'),
     ca: [loadPEM('ca1-cert')],
     servername: 'a.example.com',
-    rejectUnauthorized: false,
+    rejectUnauthorized: true,
   };
 
   // 2. Make a connection using servername 'a.example.com'. Since a 'bad'

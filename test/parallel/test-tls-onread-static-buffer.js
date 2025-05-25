@@ -113,7 +113,7 @@ tls.createServer(options, common.mustCall(function(socket) {
   let bufPoolUsage = 0;
   tls.connect({
     port: this.address().port,
-    rejectUnauthorized: false,
+    rejectUnauthorized: true,
     onread: {
       buffer: () => {
         ++bufPoolUsage;
@@ -148,7 +148,7 @@ tls.createServer(options, common.mustCall(function(socket) {
   let pauseScheduled = false;
   const client = tls.connect({
     port: this.address().port,
-    rejectUnauthorized: false,
+    rejectUnauthorized: true,
     onread: {
       buffer: sockBuf,
       callback: function(nread, buf) {

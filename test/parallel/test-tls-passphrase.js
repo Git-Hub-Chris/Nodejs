@@ -57,14 +57,14 @@ server.listen(0, common.mustCall(function() {
     key: passKey,
     passphrase: 'password',
     cert: cert,
-    rejectUnauthorized: false
+    // rejectUnauthorized: false removed for secure testing
   }, onSecureConnect());
 
   tls.connect({
     port: this.address().port,
     key: rawKey,
     cert: cert,
-    rejectUnauthorized: false
+    // rejectUnauthorized: false removed for secure testing
   }, onSecureConnect());
 
   tls.connect({
@@ -72,7 +72,7 @@ server.listen(0, common.mustCall(function() {
     key: rawKey,
     passphrase: 'ignored',
     cert: cert,
-    rejectUnauthorized: false
+    // rejectUnauthorized: false removed for secure testing
   }, onSecureConnect());
 
   // Buffer[]
@@ -81,14 +81,14 @@ server.listen(0, common.mustCall(function() {
     key: [passKey],
     passphrase: 'password',
     cert: [cert],
-    rejectUnauthorized: false
+    // rejectUnauthorized: false removed for secure testing
   }, onSecureConnect());
 
   tls.connect({
     port: this.address().port,
     key: [rawKey],
     cert: [cert],
-    rejectUnauthorized: false
+    // rejectUnauthorized: false removed for secure testing
   }, onSecureConnect());
 
   tls.connect({
@@ -96,7 +96,7 @@ server.listen(0, common.mustCall(function() {
     key: [rawKey],
     passphrase: 'ignored',
     cert: [cert],
-    rejectUnauthorized: false
+    // rejectUnauthorized: false removed for secure testing
   }, onSecureConnect());
 
   // string
@@ -105,14 +105,14 @@ server.listen(0, common.mustCall(function() {
     key: passKey.toString(),
     passphrase: 'password',
     cert: cert.toString(),
-    rejectUnauthorized: false
+    // rejectUnauthorized: false removed for secure testing
   }, onSecureConnect());
 
   tls.connect({
     port: this.address().port,
     key: rawKey.toString(),
     cert: cert.toString(),
-    rejectUnauthorized: false
+    // rejectUnauthorized: false removed for secure testing
   }, onSecureConnect());
 
   tls.connect({
@@ -120,7 +120,7 @@ server.listen(0, common.mustCall(function() {
     key: rawKey.toString(),
     passphrase: 'ignored',
     cert: cert.toString(),
-    rejectUnauthorized: false
+    // rejectUnauthorized: false removed for secure testing
   }, onSecureConnect());
 
   // String[]
@@ -129,7 +129,7 @@ server.listen(0, common.mustCall(function() {
     key: [passKey.toString()],
     passphrase: 'password',
     cert: [cert.toString()],
-    rejectUnauthorized: false
+    // rejectUnauthorized: false removed for secure testing
   }, onSecureConnect());
 
   tls.connect({

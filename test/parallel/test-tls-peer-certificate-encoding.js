@@ -40,8 +40,7 @@ const server = tls.createServer(options, (cleartext) => {
 });
 server.listen(0, common.mustCall(function() {
   const socket = tls.connect({
-    port: this.address().port,
-    rejectUnauthorized: false
+    port: this.address().port
   }, common.mustCall(() => {
     const peerCert = socket.getPeerCertificate();
 

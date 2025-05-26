@@ -47,7 +47,7 @@ const server = tls.createServer({
   server.close();
 })).listen(0, common.mustCall(function() {
   const c = tls.connect(this.address().port, {
-    rejectUnauthorized: false
+    ca: [fixtures.readKey('agent1-cert.pem')]
   }, common.mustCall(function() {
     c.on('data', function(chunk) {
       received += chunk;

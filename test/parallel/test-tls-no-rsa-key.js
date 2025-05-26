@@ -37,7 +37,7 @@ const server = tls.createServer(options, function(conn) {
   conn.end('ok');
 }).listen(0, common.mustCall(function() {
   const c = tls.connect(this.address().port, {
-    rejectUnauthorized: false
+    ca: [fixtures.readKey('ec-cert.pem')]
   }, common.mustCall(function() {
     c.on('end', common.mustCall(function() {
       c.end();

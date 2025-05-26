@@ -25,13 +25,13 @@ const server = tls.createServer(options, function(conn) {
   const ecdsa = tls.connect(this.address().port, {
     ciphers: 'ECDHE-ECDSA-AES256-GCM-SHA384',
     maxVersion: 'TLSv1.2',
-    rejectUnauthorized: false,
+    rejectUnauthorized: true,
   }, common.mustCall(function() {
     ciphers.push(ecdsa.getCipher());
     const rsa = tls.connect(server.address().port, {
       ciphers: 'ECDHE-RSA-AES256-GCM-SHA384',
       maxVersion: 'TLSv1.2',
-      rejectUnauthorized: false,
+      rejectUnauthorized: true,
     }, common.mustCall(function() {
       ciphers.push(rsa.getCipher());
       ecdsa.end();

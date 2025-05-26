@@ -33,7 +33,8 @@ const server = tls.createServer(options, common.mustCall((conn) => {
 
   const socket = tls.connect({
     socket: netSocket,
-    rejectUnauthorized: false,
+    rejectUnauthorized: true,
+    ca: [ca], // Ensure the CA is provided for certificate validation
   });
 
   const { port, address } = server.address();

@@ -34,7 +34,7 @@ function test(honorCipherOrder, clientCipher, expectedCipher, defaultCiphers) {
   }));
   server.listen(0, localhost, mustCall(function() {
     const coptions = {
-      rejectUnauthorized: false,
+      ca: fixtures.readKey('agent2-cert.pem'),
       secureProtocol: SSL_Method
     };
     if (clientCipher) {

@@ -28,7 +28,7 @@ common.expectWarning(
   }).listen(0, function() {
     const client = tls.connect({
       port: this.address().port,
-      rejectUnauthorized: false,
+      ca: [fixtures.readKey('agent1-cert.pem')],
       servername: '127.0.0.1',
     }, function() {
       client.end();

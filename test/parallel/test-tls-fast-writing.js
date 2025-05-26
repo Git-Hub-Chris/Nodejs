@@ -54,7 +54,7 @@ function onconnection(conn) {
 
 server.listen(0, function() {
   const chunk = Buffer.alloc(1024, 'x');
-  const opt = { port: this.address().port, rejectUnauthorized: false };
+  const opt = { port: this.address().port, ca: [fixtures.readKey('rsa_ca.crt')] };
   const conn = tls.connect(opt, function() {
     conn.on('drain', ondrain);
     write();

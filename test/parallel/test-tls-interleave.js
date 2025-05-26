@@ -47,7 +47,7 @@ const server = tls.createServer(options, function(c) {
     c.write(str);
   });
 }).listen(0, common.mustCall(function() {
-  const connectOpts = { rejectUnauthorized: false };
+  const connectOpts = { ca: [fixtures.readKey('rsa_ca.crt')] };
   const c = tls.connect(this.address().port, connectOpts, function() {
     c.write('some client data');
     c.on('readable', function() {

@@ -32,7 +32,7 @@ const server = tls.createServer({
 server.listen(0, common.mustCall(() => {
   const bob = tls.connect({
     port: server.address().port,
-    rejectUnauthorized: false
+    ca: [pem('agent1-cert')]
   }, common.mustCall(() => {
     msg.client = {
       alice: bob.getPeerFinished(),

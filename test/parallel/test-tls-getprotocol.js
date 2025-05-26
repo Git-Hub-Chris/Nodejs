@@ -40,7 +40,7 @@ const server = tls.createServer(serverConfig, common.mustCall(clientConfigs.leng
       host: common.localhostIPv4,
       port: server.address().port,
       ciphers: v.ciphers,
-      rejectUnauthorized: false,
+      ca: fixtures.readKey('agent2-cert.pem'),
       secureProtocol: v.secureProtocol
     }, common.mustCall(function() {
       assert.strictEqual(this.getProtocol(), v.version);

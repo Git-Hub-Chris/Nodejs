@@ -26,7 +26,7 @@ tls.createServer(options, common.mustCall(function(socket) {
   const sockBuf = Buffer.alloc(8);
   tls.connect({
     port: this.address().port,
-    rejectUnauthorized: false,
+    rejectUnauthorized: true,
     onread: {
       buffer: sockBuf,
       callback: function(nread, buf) {
@@ -51,7 +51,7 @@ tls.createServer(options, common.mustCall(function(socket) {
   const sockBuf = new Uint8Array(8);
   tls.connect({
     port: this.address().port,
-    rejectUnauthorized: false,
+    rejectUnauthorized: true,
     onread: {
       buffer: sockBuf,
       callback: function(nread, buf) {

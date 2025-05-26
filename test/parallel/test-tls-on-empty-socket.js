@@ -20,8 +20,7 @@ const server = tls.createServer({
   const socket = new net.Socket();
 
   const s = tls.connect({
-    socket: socket,
-    rejectUnauthorized: false
+    socket: socket
   }, function() {
     s.on('data', function(chunk) {
       out += chunk;

@@ -28,7 +28,10 @@ if (process.argv[2] === 'child') {
 
   function onlisten() {
     const { port } = this.address();
-    https.get({ port, rejectUnauthorized: false });
+    https.get({ 
+      port, 
+      ca: cert // Trust the self-signed certificate
+    });
   }
 
   function onplaintext(c) {

@@ -145,9 +145,9 @@ proxy.listen(0, common.mustCall(() => {
       path: '/foo',
       key: key,
       cert: cert,
+      ca: cert,  // Use the certificate as the trusted CA
       socket: socket,  // reuse the socket
-      agent: false,
-      rejectUnauthorized: false
+      agent: false
     }, (res) => {
       assert.strictEqual(res.statusCode, 200);
 

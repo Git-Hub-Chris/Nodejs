@@ -51,7 +51,7 @@ const server = tls.createServer({
 
   const socket = tls.connect({
     socket: p,
-    rejectUnauthorized: false
+    ca: [fixtures.readKey('agent1-cert.pem')] // Use self-signed certificate for testing
   }, common.mustCall(function() {
     console.log('client secure');
 

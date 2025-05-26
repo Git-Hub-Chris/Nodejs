@@ -95,7 +95,7 @@ const server = net.createServer(common.mustCall((s) => {
 })).listen(0, () => {
   const opts = {
     port: server.address().port,
-    rejectUnauthorized: false
+    ca: cert
   };
 
   tls.connect(opts, common.mustCall(function() { this.end(); }));

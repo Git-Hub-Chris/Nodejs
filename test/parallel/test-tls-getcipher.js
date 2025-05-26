@@ -48,7 +48,7 @@ server.listen(0, '127.0.0.1', common.mustCall(function() {
     host: '127.0.0.1',
     port: this.address().port,
     ciphers: 'AES256-SHA256',
-    rejectUnauthorized: false,
+    ca: fixtures.readKey('agent2-cert.pem'),
     maxVersion: 'TLSv1.2',
   }, common.mustCall(function() {
     const cipher = this.getCipher();
@@ -63,7 +63,7 @@ server.listen(0, '127.0.0.1', common.mustCall(function() {
     host: '127.0.0.1',
     port: this.address().port,
     ciphers: 'ECDHE-RSA-AES256-GCM-SHA384',
-    rejectUnauthorized: false,
+    ca: fixtures.readKey('agent2-cert.pem'),
     maxVersion: 'TLSv1.2',
   }, common.mustCall(function() {
     const cipher = this.getCipher();
@@ -87,7 +87,7 @@ tls.createServer({
     port: this.address().port,
     ciphers: 'TLS_AES_256_GCM_SHA384',
     maxVersion: 'TLSv1.3',
-    rejectUnauthorized: false
+    ca: fixtures.readKey('agent2-cert.pem')
   }, common.mustCall(() => {
     const cipher = client.getCipher();
     assert.strictEqual(cipher.name, 'TLS_AES_256_GCM_SHA384');

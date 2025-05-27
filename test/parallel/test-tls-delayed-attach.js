@@ -61,7 +61,7 @@ const server = net.createServer(common.mustCall((c) => {
   }, 200);
 })).listen(0, common.mustCall(() => {
   const c = tls.connect(server.address().port, {
-    rejectUnauthorized: false
+    ca: [fixtures.readKey('agent1-cert.pem')]
   }, () => {
     c.end(sent);
   });

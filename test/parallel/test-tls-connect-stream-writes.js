@@ -48,7 +48,7 @@ server.listen(0, function() {
 
   const socket = tls.connect({
     socket: p,
-    rejectUnauthorized: false
+    ca: [fixtures.readKey('rsa_ca.crt')]
   }, function() {
     for (let i = 0; i < 50; ++i) {
       socket.write(content);

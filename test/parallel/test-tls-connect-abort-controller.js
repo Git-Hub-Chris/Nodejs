@@ -20,7 +20,7 @@ server.listen(0, common.mustCall(async () => {
     port,
     host,
     signal,
-    rejectUnauthorized: false,
+    ca: fixtures.readKey('agent1-cert.pem'),
   });
 
   const assertAbort = async (socket, testName) => {

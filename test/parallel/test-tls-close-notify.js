@@ -41,6 +41,7 @@ const server = tls.createServer({
   }));
 }).listen(0, common.mustCall(function() {
   const c = tls.connect(this.address().port, {
+    // Intentionally disabling certificate validation for testing purposes.
     rejectUnauthorized: false
   }, common.mustCall(function() {
     // Send close-notify without shutting down TCP socket.

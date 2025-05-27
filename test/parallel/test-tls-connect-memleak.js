@@ -48,7 +48,7 @@ const gcListener = { ongc() { collected = true; } };
 
   const sock = tls.connect(
     server.address().port,
-    { rejectUnauthorized: false },
+    { ca: fixtures.readKey('rsa_cert.crt') },
     common.mustCall(() => {
       assert.strictEqual(gcObject, gcObject); // Keep reference alive
       assert.strictEqual(collected, false);

@@ -44,16 +44,14 @@ const server = tls.Server(options, common.mustCall(function(socket) {
 
 server.listen(0, function() {
   const client1options = {
-    port: this.address().port,
-    rejectUnauthorized: false
+    port: this.address().port
   };
   const client1 = tls.connect(client1options, common.mustCall(function() {
     client1.end();
   }));
 
   const client2options = {
-    port: this.address().port,
-    rejectUnauthorized: false
+    port: this.address().port
   };
   const client2 = tls.connect(client2options);
   client2.on('secureConnect', common.mustCall(function() {

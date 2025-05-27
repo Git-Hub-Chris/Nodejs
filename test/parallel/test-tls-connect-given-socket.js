@@ -40,8 +40,8 @@ const server = tls.createServer(options, common.mustCall((socket) => {
   let waiting = 2;
   function establish(socket, calls) {
     const client = tls.connect({
-      rejectUnauthorized: false,
-      socket: socket
+      socket: socket,
+      ca: [fixtures.readKey('rsa_cert.crt')] // Use the server's certificate as the trusted CA
     }, common.mustCall(() => {
       let data = '';
       client.on('data', common.mustCall((chunk) => {

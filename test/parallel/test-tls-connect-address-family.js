@@ -22,7 +22,7 @@ function runTest() {
       host: 'localhost',
       port: this.address().port,
       family: 6,
-      rejectUnauthorized: false,
+      ca: fixtures.readKey('agent1-cert.pem'),
     };
     // Will fail with ECONNREFUSED if the address family is not honored.
     tls.connect(options).once('secureConnect', common.mustCall(function() {

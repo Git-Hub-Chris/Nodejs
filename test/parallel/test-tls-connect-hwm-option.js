@@ -24,7 +24,7 @@ server.listen(0, common.mustCall(() => {
   clients++;
   const highBob = tls.connect({
     port: server.address().port,
-    rejectUnauthorized: false,
+    ca: pem('agent1-cert'),
     highWaterMark: 128000,
   }, common.mustCall(() => {
     assert.strictEqual(highBob.readableHighWaterMark, 128000);
@@ -34,7 +34,7 @@ server.listen(0, common.mustCall(() => {
   clients++;
   const defaultHighBob = tls.connect({
     port: server.address().port,
-    rejectUnauthorized: false,
+    ca: pem('agent1-cert'),
     highWaterMark: undefined,
   }, common.mustCall(() => {
     assert.strictEqual(defaultHighBob.readableHighWaterMark, process.platform === 'win32' ? 16 * 1024 : 64 * 1024);
@@ -44,7 +44,7 @@ server.listen(0, common.mustCall(() => {
   clients++;
   const zeroHighBob = tls.connect({
     port: server.address().port,
-    rejectUnauthorized: false,
+    ca: pem('agent1-cert'),
     highWaterMark: 0,
   }, common.mustCall(() => {
     assert.strictEqual(zeroHighBob.readableHighWaterMark, 0);

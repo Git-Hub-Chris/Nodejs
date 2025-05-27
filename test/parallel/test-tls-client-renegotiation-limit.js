@@ -66,6 +66,8 @@ function test(next) {
     const options = {
       host: server.address().host,
       port: server.address().port,
+      // Disabling certificate validation for testing purposes only.
+      // Do not use this setting in production environments.
       rejectUnauthorized: false,
     };
     const client = tls.connect(options, spam);

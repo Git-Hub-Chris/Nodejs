@@ -21,6 +21,9 @@
 
 'use strict';
 
+// Constant to explicitly indicate that certificate validation is disabled for testing purposes only.
+const TESTING_REJECT_UNAUTHORIZED = false;
+
 // Check that the ticket from the first connection causes session resumption
 // when used to make a second connection.
 
@@ -50,7 +53,7 @@ server.listen(0, common.mustCall(function() {
   let tls13;
   const client1 = tls.connect({
     port: this.address().port,
-    rejectUnauthorized: false // Used for testing purposes only. Do not use in production.
+    rejectUnauthorized: TESTING_REJECT_UNAUTHORIZED // Used for testing purposes only. Do not use in production.
   }, common.mustCall(() => {
     tls13 = client1.getProtocol() === 'TLSv1.3';
     assert.strictEqual(client1.isSessionReused(), false);
@@ -94,7 +97,7 @@ server.listen(0, common.mustCall(function() {
 
     const opts = {
       port: server.address().port,
-      rejectUnauthorized: false, // Used for testing purposes only. Do not use in production.
+      rejectUnauthorized: TESTING_REJECT_UNAUTHORIZED, // Used for testing purposes only. Do not use in production.
       session: session1,
     };
 

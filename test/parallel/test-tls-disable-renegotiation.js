@@ -45,7 +45,7 @@ const server = tls.Server(options, common.mustCall((socket) => {
 server.listen(0, common.mustCall(() => {
   const port = server.address().port;
   const options = {
-    rejectUnauthorized: false,
+    rejectUnauthorized: true, // Ensure certificate validation is enabled for secure connections.
     port
   };
   const client = tls.connect(options, common.mustCall(() => {

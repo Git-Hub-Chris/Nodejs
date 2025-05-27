@@ -120,7 +120,9 @@ function runTest(testIndex) {
     ca: tcase.ca.map(loadPEM),
     key: loadPEM(tcase.key),
     cert: loadPEM(tcase.cert),
-    rejectUnauthorized: false
+    // WARNING: Disabling certificate validation for testing purposes only.
+    // Do not use `rejectUnauthorized: false` in production environments.
+    rejectUnauthorized: process.env.NODE_ENV === 'test' ? false : true
   };
 
 

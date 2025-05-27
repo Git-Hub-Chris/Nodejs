@@ -24,6 +24,8 @@ const tls = require('tls');
 const server = tls.createServer({
   key: fixtures.readKey('agent1-key.pem'),
   cert: fixtures.readKey('agent1-cert.pem'),
+  ca: [fixtures.readKey('agent1-cert.pem')], // Add CA for self-signed certificate
+  requestCert: true, // Request client certificate for validation
 }, common.mustCall((socket) => {
   server.close();
 
@@ -47,7 +49,7 @@ const server = tls.createServer({
 server.listen(0, common.mustCall(() => {
   const socket = tls.connect({
     port: server.address().port,
-    rejectUnauthorized: false,
+    ca: [fixtures.readKey('agent1-cert.pem')], // Trust the self-signed certificate
     allowHalfOpen: true,
   }, common.mustCall(() => {
     let message = '';

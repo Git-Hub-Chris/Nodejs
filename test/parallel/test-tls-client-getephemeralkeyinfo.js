@@ -55,7 +55,7 @@ function test(size, type, name, cipher) {
   server.listen(0, common.mustCall(() => {
     const client = tls.connect({
       port: server.address().port,
-      rejectUnauthorized: false
+      ca: cert
     }, common.mustCall(function() {
       const ekeyinfo = client.getEphemeralKeyInfo();
       assert.strictEqual(ekeyinfo.type, type);

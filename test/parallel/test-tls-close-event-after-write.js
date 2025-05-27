@@ -32,7 +32,7 @@ const server = tls.createServer({
   test();
 }).listen(0, common.mustCall(function() {
   tls.connect(this.address().port, {
-    rejectUnauthorized: false
+    ca: fixtures.readKey('agent1-cert.pem')
   }, common.mustCall(function() {
     cconn = this;
     cconn.on('data', (d) => {

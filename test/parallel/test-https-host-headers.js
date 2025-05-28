@@ -33,7 +33,7 @@ const httpsServer = https.createServer({
     path: `/${counter++}`,
     host: 'localhost',
     port: this.address().port,
-    rejectUnauthorized: false,
+    ca: fixtures.readKey('agent1-cert.pem'),
   }, cb).on('error', common.mustNotCall());
 
   https.request({
@@ -41,7 +41,7 @@ const httpsServer = https.createServer({
     path: `/${counter++}`,
     host: 'localhost',
     port: this.address().port,
-    rejectUnauthorized: false,
+    ca: fixtures.readKey('agent1-cert.pem'),
   }, cb).on('error', common.mustNotCall()).end();
 
   https.request({
@@ -49,7 +49,7 @@ const httpsServer = https.createServer({
     path: `/${counter++}`,
     host: 'localhost',
     port: this.address().port,
-    rejectUnauthorized: false,
+    ca: fixtures.readKey('agent1-cert.pem'),
   }, cb).on('error', common.mustNotCall()).end();
 
   https.request({
@@ -57,7 +57,7 @@ const httpsServer = https.createServer({
     path: `/${counter++}`,
     host: 'localhost',
     port: this.address().port,
-    rejectUnauthorized: false,
+    ca: fixtures.readKey('agent1-cert.pem'),
   }, cb).on('error', common.mustNotCall()).end();
 
   https.request({
@@ -65,7 +65,7 @@ const httpsServer = https.createServer({
     path: `/${counter++}`,
     host: 'localhost',
     port: this.address().port,
-    rejectUnauthorized: false,
+    ca: fixtures.readKey('agent1-cert.pem'),
   }, cb).on('error', common.mustNotCall()).end();
 
   https.get({
@@ -74,7 +74,7 @@ const httpsServer = https.createServer({
     host: 'localhost',
     setHost: false,
     port: this.address().port,
-    rejectUnauthorized: false,
+    ca: fixtures.readKey('agent1-cert.pem'),
   }, cb).on('error', common.mustNotCall());
 
   https.request({
@@ -84,7 +84,7 @@ const httpsServer = https.createServer({
     setHost: true,
     // agent: false,
     port: this.address().port,
-    rejectUnauthorized: false,
+    ca: fixtures.readKey('agent1-cert.pem'),
   }, cb).on('error', common.mustNotCall()).end();
 
   https.get({
@@ -93,7 +93,7 @@ const httpsServer = https.createServer({
     host: 'localhost',
     setHost: 0,
     port: this.address().port,
-    rejectUnauthorized: false,
+    ca: fixtures.readKey('agent1-cert.pem'),
   }, cb).on('error', common.mustNotCall());
 
   https.get({
@@ -102,7 +102,7 @@ const httpsServer = https.createServer({
     host: 'localhost',
     setHost: null,
     port: this.address().port,
-    rejectUnauthorized: false,
+    ca: fixtures.readKey('agent1-cert.pem'),
   }, cb).on('error', common.mustNotCall());
 }));
 

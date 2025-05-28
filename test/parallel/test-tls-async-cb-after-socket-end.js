@@ -42,7 +42,7 @@ server.listen(0, common.mustCall(() => {
     // won't have a session_id until client2, which will have a valid session.
     maxVersion: 'TLSv1.2',
     port: server.address().port,
-    rejectUnauthorized: false,
+    ca: fixtures.readKey('rsa_cert.crt'), // Use self-signed certificate
     session: false
   };
 

@@ -48,7 +48,7 @@ const server_http = http.createServer(function(req, res) {
 server_http.listen(0, function() {
   const req = http.request({
     port: this.address().port,
-    rejectUnauthorized: false
+    ca: fixtures.readKey('agent1-cert.pem')
   }, function(res) {
     server_http.close();
     res.resume();
@@ -72,7 +72,7 @@ const server_https = https.createServer(options, function(req, res) {
 server_https.listen(0, function() {
   const req = https.request({
     port: this.address().port,
-    rejectUnauthorized: false
+    ca: fixtures.readKey('agent1-cert.pem')
   }, function(res) {
     server_https.close();
     res.resume();

@@ -41,8 +41,7 @@ const server = https.createServer(options, function() {
     host: 'localhost',
     port: this.address().port,
     path: '/',
-    method: 'GET',
-    rejectUnauthorized: false
+    method: 'GET'
   });
   req.setTimeout(10);
   req.end();

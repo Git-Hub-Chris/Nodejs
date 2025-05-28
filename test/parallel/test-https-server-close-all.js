@@ -35,11 +35,11 @@ server.listen(0, function() {
   const port = server.address().port;
 
   // Create a first request but never finish it
-  const client1 = connect({ port, rejectUnauthorized: false });
+  const client1 = connect({ port, ca: fixtures.readKey('agent1-cert.pem') });
 
   client1.on('connect', common.mustCall(() => {
     // Create a second request, let it finish but leave the connection opened using HTTP keep-alive
-    const client2 = connect({ port, rejectUnauthorized: false });
+    const client2 = connect({ port, ca: fixtures.readKey('agent1-cert.pem') });
     let response = '';
 
     client2.setEncoding('utf8');

@@ -161,7 +161,7 @@ async function testHttpsGet() {
     host: '127.0.0.1',
     port: httpsServer.address().port,
     path: '/hello-world',
-    rejectUnauthorized: false,
+    ca: fixtures.readKey('self-signed-cert.pem'), // Trust the self-signed certificate
     headers: requestHeaders,
   }, common.mustCall((res) => {
     // Dump the response.

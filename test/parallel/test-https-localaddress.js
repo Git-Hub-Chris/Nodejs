@@ -55,8 +55,7 @@ server.listen(0, '127.0.0.1', function() {
     family: 4,
     path: '/',
     method: 'GET',
-    localAddress: '127.0.0.2',
-    rejectUnauthorized: false
+    localAddress: '127.0.0.2'
   };
 
   const req = https.request(options, function(res) {

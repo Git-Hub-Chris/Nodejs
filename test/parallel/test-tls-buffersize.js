@@ -24,8 +24,7 @@ const server = tls.createServer({
 
 server.listen(0, common.mustCall(() => {
   const client = tls.connect({
-    port: server.address().port,
-    rejectUnauthorized: false
+    port: server.address().port
   }, common.mustCall(() => {
     assert.strictEqual(client.bufferSize, 0);
 

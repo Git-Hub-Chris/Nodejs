@@ -68,7 +68,7 @@ server.listen(0, common.mustCall(function() {
   console.log('1) Making Request');
   https.get({
     port: this.address().port,
-    rejectUnauthorized: false
+    ca: fixtures.readKey('agent1-cert.pem')
   }, common.mustCall(function(res) {
     let bodyBuffer = '';
 

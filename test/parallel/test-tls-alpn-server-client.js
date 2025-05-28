@@ -190,6 +190,8 @@ function TestFatalAlert() {
     tls.connect({
       host: serverIP,
       port,
+      // Intentionally disabling certificate validation for testing purposes only.
+      // This must not be used in production environments.
       rejectUnauthorized: false,
       ALPNProtocols: ['bar']
     }, common.mustNotCall()).on('error', common.mustCall((err) => {

@@ -47,7 +47,7 @@ server.listen(0, function() {
   const req = https.request({
     method: 'POST',
     port: this.address().port,
-    rejectUnauthorized: false
+    rejectUnauthorized: true
   }, function(res) {
     let timer;
     res.pause();

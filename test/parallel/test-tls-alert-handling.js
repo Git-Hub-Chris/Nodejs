@@ -60,9 +60,7 @@ server.on('tlsClientError', common.mustNotCall());
 server.on('error', common.mustNotCall());
 
 function sendClient() {
-  const client = tls.connect(server.address().port, {
-    rejectUnauthorized: false
-  });
+  const client = tls.connect(server.address().port, {});
   client.on('data', common.mustCall(function() {
     if (iter++ === 2) sendBADTLSRecord();
     if (iter < max_iter) {
@@ -86,7 +84,6 @@ function sendBADTLSRecord() {
   const socket = net.connect(server.address().port);
   const client = tls.connect({
     socket: socket,
-    rejectUnauthorized: false
   }, common.mustCall(function() {
     client.write('x');
     client.on('data', (data) => {

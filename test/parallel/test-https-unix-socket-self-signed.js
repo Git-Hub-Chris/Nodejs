@@ -22,6 +22,6 @@ const server = https.createServer(options, common.mustCall((req, res) => {
 server.listen(common.PIPE, common.mustCall(() => {
   https.get({
     socketPath: common.PIPE,
-    rejectUnauthorized: false
+    ca: fixtures.readKey('rsa_cert.crt')
   });
 }));

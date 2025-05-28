@@ -16,8 +16,7 @@ const serverOptions = {
   key: loadPEM('agent2-key'),
   cert: loadPEM('agent2-cert'),
   ca: [ loadPEM('ca2-cert') ],
-  requestCert: true,
-  rejectUnauthorized: false,
+  requestCert: true
 };
 
 let connections = 0;
@@ -44,8 +43,7 @@ server.addContext('context2', tls.createSecureContext(secureContext));
 const clientOptionsBase = {
   key: loadPEM('agent1-key'),
   cert: loadPEM('agent1-cert'),
-  ca: [ loadPEM('ca1-cert') ],
-  rejectUnauthorized: false,
+  ca: [ loadPEM('ca1-cert') ]
 };
 
 server.listen(0, common.mustCall(() => {

@@ -22,7 +22,7 @@
 'use strict';
 
 // Constant to explicitly indicate that certificate validation is disabled for testing purposes only.
-const TESTING_REJECT_UNAUTHORIZED = false;
+const TESTING_CA_CERT = fixtures.readKey('ca-cert.pem');
 
 // Check that the ticket from the first connection causes session resumption
 // when used to make a second connection.
@@ -53,7 +53,7 @@ server.listen(0, common.mustCall(function() {
   let tls13;
   const client1 = tls.connect({
     port: this.address().port,
-    rejectUnauthorized: TESTING_REJECT_UNAUTHORIZED // Used for testing purposes only. Do not use in production.
+    ca: TESTING_CA_CERT // Use a trusted CA certificate for testing purposes.
   }, common.mustCall(() => {
     tls13 = client1.getProtocol() === 'TLSv1.3';
     assert.strictEqual(client1.isSessionReused(), false);
@@ -97,7 +97,7 @@ server.listen(0, common.mustCall(function() {
 
     const opts = {
       port: server.address().port,
-      rejectUnauthorized: TESTING_REJECT_UNAUTHORIZED, // Used for testing purposes only. Do not use in production.
+      ca: TESTING_CA_CERT, // Use a trusted CA certificate for testing purposes.
       session: session1,
     };
 

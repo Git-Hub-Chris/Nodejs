@@ -36,7 +36,7 @@ server.listen(0, common.mustCall(() => {
   const socket = tls.connect(
     server.address().port,
     {
-      rejectUnauthorized: false
+      ca: readKey('agent1-cert.pem') // Use the server's certificate as the trusted CA
     },
     common.mustCall(() => {
       request(socket);

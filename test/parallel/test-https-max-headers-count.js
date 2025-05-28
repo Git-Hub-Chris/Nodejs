@@ -55,8 +55,7 @@ server.listen(0, common.mustCall(() => {
     const expected = maxAndExpected[responses][1];
     const req = https.request({
       port: server.address().port,
-      headers: headers,
-      rejectUnauthorized: false
+      headers: headers
     }, (res) => {
       assert.strictEqual(Object.keys(res.headers).length, expected);
       res.on('end', () => {

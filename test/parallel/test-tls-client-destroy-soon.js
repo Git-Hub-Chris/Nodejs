@@ -49,7 +49,7 @@ const server = tls.createServer(options, common.mustCall(function(socket) {
 server.listen(0, common.mustCall(function() {
   const client = tls.connect({
     port: this.address().port,
-    rejectUnauthorized: false
+    ca: [fixtures.readKey('agent2-cert.pem')]
   }, common.mustCall(function() {
     let bytesRead = 0;
 

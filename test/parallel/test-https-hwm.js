@@ -42,7 +42,7 @@ const httpsServer = https.createServer({
     path: `/${counter++}`,
     host: 'localhost',
     port: this.address().port,
-    rejectUnauthorized: false,
+    // rejectUnauthorized is omitted to use the default value (true),
     highWaterMark: 128000,
   }, loadCallback(128000)).on('error', common.mustNotCall()).end();
 
@@ -51,7 +51,7 @@ const httpsServer = https.createServer({
     path: `/${counter++}`,
     host: 'localhost',
     port: this.address().port,
-    rejectUnauthorized: false,
+    // rejectUnauthorized is omitted to use the default value (true),
     highWaterMark: 0,
   }, loadCallback(0)).on('error', common.mustNotCall()).end();
 
@@ -60,7 +60,7 @@ const httpsServer = https.createServer({
     path: `/${counter++}`,
     host: 'localhost',
     port: this.address().port,
-    rejectUnauthorized: false,
+    // rejectUnauthorized is omitted to use the default value (true),
     highWaterMark: undefined,
   }, loadCallback(process.platform === 'win32' ? 16 * 1024 : 64 * 1024)).on('error', common.mustNotCall()).end();
 }));

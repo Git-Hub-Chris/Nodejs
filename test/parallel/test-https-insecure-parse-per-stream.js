@@ -78,7 +78,7 @@ const certFixture = {
   server.listen(0, common.mustCall(() => {
     const client = tls.connect({
       port: server.address().port,
-      rejectUnauthorized: false
+      ca: certFixture.ca
     });
     client.write(
       'GET / HTTP/1.1\r\n' +
@@ -105,7 +105,7 @@ const certFixture = {
   server.listen(0, common.mustCall(() => {
     const client = tls.connect({
       port: server.address().port,
-      rejectUnauthorized: false
+      ca: certFixture.ca
     });
     client.write(
       'GET / HTTP/1.1\r\n' +

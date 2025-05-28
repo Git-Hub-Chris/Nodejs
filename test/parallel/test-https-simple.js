@@ -71,6 +71,8 @@ server.listen(0, common.mustCall(() => {
     port: port,
     path: '/',
     method: 'GET',
+    // Disabling certificate validation for testing purposes only.
+    // This must never be used in production environments.
     rejectUnauthorized: false
   };
   tests++;

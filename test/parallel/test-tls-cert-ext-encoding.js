@@ -78,7 +78,7 @@ const server = tls.createServer(options, (socket) => {
 server.listen(0, common.mustCall(function() {
   const client = tls.connect({
     port: this.address().port,
-    rejectUnauthorized: false
+    rejectUnauthorized: false // Used for testing purposes only. Do not use in production.
   }, common.mustCall(() => {
     // This should not crash process:
     client.getPeerCertificate();

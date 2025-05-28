@@ -36,7 +36,7 @@ server.listen();
 server.on('listening', function makeRequest() {
   https.get({
     port: this.address().port,
-    rejectUnauthorized: false
+    ca: fixtures.readKey('ca1-cert.pem')
   }, (res) => {
     assert.strictEqual(res.statusCode, 200);
     res.on('end', () => {

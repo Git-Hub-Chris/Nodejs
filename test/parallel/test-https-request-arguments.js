@@ -34,7 +34,7 @@ const options = {
         {
           hostname: 'localhost',
           port: server.address().port,
-          rejectUnauthorized: false
+          ca: fixtures.readKey('ca1-cert.pem')
         },
 
         common.mustCall((res) => {

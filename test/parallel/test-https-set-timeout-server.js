@@ -231,7 +231,7 @@ test(function fastTimeout(cb) {
     const options = {
       port: server.address().port,
       allowHalfOpen: true,
-      rejectUnauthorized: false
+      ca: fixtures.readKey('agent1-cert.pem') // Use self-signed certificate
     };
     const c = tls.connect(options, () => {
       c.write('GET /1 HTTP/1.1\r\nHost: localhost\r\n\r\n');

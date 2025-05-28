@@ -42,8 +42,7 @@ server.listen(0, () => {
     hostname: '127.0.0.1',
     port: server.address().port,
     path: '/',
-    method: 'GET',
-    rejectUnauthorized: false
+    method: 'GET'
   };
 
   const req = https.request(requestOptions, (res) => {

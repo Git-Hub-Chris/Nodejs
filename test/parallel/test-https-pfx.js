@@ -39,7 +39,7 @@ const options = {
   pfx: pfx,
   passphrase: 'sample',
   requestCert: true,
-  rejectUnauthorized: false
+  ca: [fixtures.readKey('rsa_cert.pem')] // Trust the self-signed certificate
 };
 
 const server = https.createServer(options, function(req, res) {

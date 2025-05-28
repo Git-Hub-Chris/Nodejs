@@ -28,7 +28,7 @@ const https = require('https');
       host: HOSTNAME,
       port: this.address().port,
       family: 6,
-      rejectUnauthorized: false,
+      ca: fixtures.readKey('agent1-cert.pem'),
       lookup: common.mustCall((addr, opt, cb) => {
         assert.strictEqual(addr, HOSTNAME);
         assert.strictEqual(opt.family, 6);

@@ -46,7 +46,7 @@ const server = https.createServer(options, common.mustCall((req, res) => {
 server.listen(0, common.mustCall(function() {
   const client1 = tls.connect({
     port: this.address().port,
-    rejectUnauthorized: false
+    rejectUnauthorized: true
   }, common.mustCall(() => {
     console.log('connect1');
     assert.strictEqual(client1.isSessionReused(), false);
@@ -61,7 +61,7 @@ server.listen(0, common.mustCall(function() {
 
     const opts = {
       port: server.address().port,
-      rejectUnauthorized: false,
+      rejectUnauthorized: true,
       session,
     };
 

@@ -85,6 +85,7 @@ function createDnsServer(ipv6Addr, ipv4Addr, cb) {
         `https://example.org:${ipv4Server.address().port}/`,
         {
           lookup,
+          // Disabling certificate validation for testing purposes only.
           rejectUnauthorized: false,
           autoSelectFamily: true,
           servername: 'example.org',

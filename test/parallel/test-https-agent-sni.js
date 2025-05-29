@@ -47,7 +47,6 @@ server.listen(0, function() {
       port: this.address().port,
       host: '127.0.0.1',
       servername: `sni.${j}`,
-      rejectUnauthorized: false
     }, expectResponse(j));
   }
   https.get({
@@ -57,6 +56,5 @@ server.listen(0, function() {
     port: this.address().port,
     host: '127.0.0.1',
     servername: '',
-    rejectUnauthorized: false
   }, expectResponse(false));
 });

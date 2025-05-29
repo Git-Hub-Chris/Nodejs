@@ -53,7 +53,7 @@ server.listen(0, () => {
         https.get({
           path: '/',
           port: server.address().port,
-          rejectUnauthorized: false
+          ca: fixtures.readKey('ca-cert.pem')
         }, function(res) {
           res.resume();
           assert.strictEqual(res.statusCode, 200);

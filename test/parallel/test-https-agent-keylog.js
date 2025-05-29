@@ -20,14 +20,14 @@ const server = https.createServer({
 }).listen(() => {
   https.get({
     port: server.address().port,
-    rejectUnauthorized: false,
+    // Certificate validation enabled by default
   }, (res) => {
     res.resume();
     res.on('end', () => {
       // Trigger TLS connection reuse
       https.get({
         port: server.address().port,
-        rejectUnauthorized: false,
+        // Certificate validation enabled by default
       }, (res) => {
         server.close();
         res.resume();

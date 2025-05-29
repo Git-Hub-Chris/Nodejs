@@ -30,7 +30,7 @@ function first(server) {
   const port = server.address().port;
   const req = https.request({
     port: port,
-    rejectUnauthorized: false
+    ca: readKey('custom-ca-cert.pem')
   }, function(res) {
     res.resume();
 
@@ -57,7 +57,7 @@ function second(server, session) {
   const req = https.request({
     port: server.address().port,
     ciphers: (common.hasOpenSSL(3, 1) ? 'DEFAULT:@SECLEVEL=0' : 'DEFAULT'),
-    rejectUnauthorized: false
+    ca: readKey('custom-ca-cert.pem')
   }, function(res) {
     res.resume();
   });

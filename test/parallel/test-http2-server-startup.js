@@ -82,7 +82,7 @@ server.on('error', common.mustNotCall());
     const port = server.address().port;
     client = tls.connect({
       port: port,
-      rejectUnauthorized: false,
+      rejectUnauthorized: true,
       ALPNProtocols: ['h2']
     }, common.mustCall());
   }));
@@ -107,7 +107,7 @@ server.on('error', common.mustNotCall());
     const port = server.address().port;
     const socket = tls.connect({
       port: port,
-      rejectUnauthorized: false,
+      rejectUnauthorized: true,
       ALPNProtocols: ['h2']
     }, common.mustCall());
     socket.resume();

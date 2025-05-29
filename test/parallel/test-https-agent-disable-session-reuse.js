@@ -31,8 +31,7 @@ const server = https.createServer(options, function(req, res) {
   function request() {
     const options = {
       agent: agent,
-      port: server.address().port,
-      rejectUnauthorized: false
+      port: server.address().port
     };
 
     https.request(options, function(res) {

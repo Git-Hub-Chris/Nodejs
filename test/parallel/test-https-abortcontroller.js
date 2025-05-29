@@ -27,7 +27,7 @@ const options = {
       port,
       path: '/',
       method: 'GET',
-      rejectUnauthorized: false,
+
       signal: ac.signal,
     });
     assert.strictEqual(getEventListeners(ac.signal, 'abort').length, 1);
@@ -54,7 +54,7 @@ const options = {
       port,
       path: '/',
       method: 'GET',
-      rejectUnauthorized: false,
+
       signal,
     });
     assert.strictEqual(getEventListeners(ac.signal, 'abort').length, 1);
@@ -82,7 +82,7 @@ const options = {
       port,
       path: '/',
       method: 'GET',
-      rejectUnauthorized: false,
+
       signal,
     });
     assert.strictEqual(getEventListeners(ac.signal, 'abort').length, 0);

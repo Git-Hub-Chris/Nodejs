@@ -48,7 +48,6 @@ const httpsServer = https.createServer(options, function(req, res) {
 
 httpsServer.listen(0, function() {
   https.get({
-    port: this.address().port,
-    rejectUnauthorized: false
+    port: this.address().port
   });
 });

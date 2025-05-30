@@ -37,7 +37,7 @@ const tls = require('tls');
   server.listen(0, function() {
     const client = tls.connect({
       port: server.address().port,
-      rejectUnauthorized: false,
+      ca: [fixtures.readKey('rsa_cert.crt')],
       ALPNProtocols: ['a'],
     }, common.mustCall(() => {
       assert.strictEqual(client.alpnProtocol, 'a');

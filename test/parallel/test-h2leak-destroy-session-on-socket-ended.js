@@ -66,7 +66,7 @@ function client() {
   const client = tls.connect({
     port: server.address().port,
     host: 'localhost',
-    rejectUnauthorized: false,
+    rejectUnauthorized: true,
     ALPNProtocols: ['h2']
   }, () => {
     client.end(Buffer.concat(h2fstStream.map((s) => Buffer.from(s, 'base64'))), (err) => {

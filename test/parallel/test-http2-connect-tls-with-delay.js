@@ -23,7 +23,7 @@ server.listen(0, '127.0.0.1', common.mustCall(() => {
     host: '127.0.0.1',
     servername: 'localhost',
     port: server.address().port,
-    rejectUnauthorized: false
+    ca: fixtures.readKey('agent1-cert.pem')
   };
 
   const socket = tls.connect(options, async () => {

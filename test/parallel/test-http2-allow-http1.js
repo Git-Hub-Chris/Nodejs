@@ -34,7 +34,7 @@ const http2 = require('http2');
     https.get(
       `https://localhost:${server.address().port}`,
       {
-        rejectUnauthorized: false,
+        ca: fixtures.readKey('agent1-cert.pem'),
         headers: { connection: 'keep-alive' },
       },
       resolve

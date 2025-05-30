@@ -27,8 +27,7 @@ server.listen(0, common.mustCall(function() {
   https.get({
     agent: false,
     path: '/',
-    port: this.address().port,
-    rejectUnauthorized: false
+    port: this.address().port
   }, common.mustCall(function(res) {
     console.error(res.statusCode, res.headers);
     res.resume();

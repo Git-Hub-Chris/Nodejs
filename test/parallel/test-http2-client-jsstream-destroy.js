@@ -35,7 +35,7 @@ class JSSocket extends Duplex {
 
 server.listen(0, common.mustCall(function() {
   const socket = tls.connect({
-    rejectUnauthorized: false,
+    ca: fixtures.readKey('agent1-cert.pem'),
     host: 'localhost',
     port: this.address().port,
     ALPNProtocols: ['h2']

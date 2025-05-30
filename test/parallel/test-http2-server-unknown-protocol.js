@@ -31,7 +31,7 @@ server.listen(0, function() {
   // after unknownProtocolTimeout.
   tls.connect({
     port: server.address().port,
-    rejectUnauthorized: false,
+    ca: fixtures.readKey('rsa_cert.crt'),
   });
 
   // If the client sends an ALPN extension that does not contain 'h2', the
@@ -39,7 +39,7 @@ server.listen(0, function() {
   // is established at all.
   tls.connect({
     port: server.address().port,
-    rejectUnauthorized: false,
+    ca: fixtures.readKey('rsa_cert.crt'),
     ALPNProtocols: ['bogus']
   }).on('error', common.mustCall((err) => {
     const allowedErrors = ['ECONNRESET', 'ERR_SSL_TLSV1_ALERT_NO_APPLICATION_PROTOCOL'];

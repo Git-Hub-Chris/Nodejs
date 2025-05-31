@@ -33,7 +33,7 @@ function client() {
   const down = tls.connect({
     host: '127.0.0.1',
     port: server.address().port,
-    rejectUnauthorized: false
+    rejectUnauthorized: true
   }).on('secureConnect', () => {
     down.write(HEAD, common.mustSucceed());
 
@@ -52,7 +52,7 @@ function client() {
     // Aborted
     tls.connect({
       socket: down,
-      rejectUnauthorized: false
+      rejectUnauthorized: true
     });
   });
 }

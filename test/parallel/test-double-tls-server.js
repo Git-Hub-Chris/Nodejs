@@ -62,7 +62,7 @@ const serverReplaySize = 2 * 1024 * 1024;
     const clientTlsSock = tls.connect({
       host: '127.0.0.1',
       port: server.address().port,
-      rejectUnauthorized: false,
+      ca: [fixtures.readKey('agent1-cert.pem')],
     });
 
     const recv = [];

@@ -29,7 +29,7 @@ server.listen(
     const clientOptions = {
       agent: new https.Agent({
         keepAlive: true,
-        rejectUnauthorized: false
+        ca: fixtures.readKey('ca1-cert.pem')
       }),
       port: port
     };

@@ -33,7 +33,7 @@ var gotResponse = false;
 var options = {
   method: 'POST',
   port: PORT,
-  rejectUnauthorized: false
+  rejectUnauthorized: true
 };
 
 var req = https.request(options, function(res) {

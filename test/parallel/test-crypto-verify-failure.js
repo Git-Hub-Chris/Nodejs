@@ -53,8 +53,7 @@ function verify() {
 
 server.listen(0, common.mustCall(() => {
   tls.connect({
-    port: server.address().port,
-    rejectUnauthorized: false
+    port: server.address().port
   }, common.mustCall(() => {
     verify();
   }))

@@ -41,7 +41,8 @@ const server = https.createServer(serverOptions, common.mustCall((req, res) => {
     privateKeyEngine: engine,
     privateKeyIdentifier: 'dummykey',
     cert: agentCert,
-    rejectUnauthorized: false, // Prevent failing on self-signed certificates
+    ca: agentCa, // Trust the self-signed certificate
+    rejectUnauthorized: true,
     headers: {},
   };
 

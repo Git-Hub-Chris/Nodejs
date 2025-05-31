@@ -37,7 +37,7 @@ function onlistening() {
   // Creating client and connecting it to server
   //
   tls
-    .connect(server.address().port, { rejectUnauthorized: false })
+    .connect(server.address().port, { rejectUnauthorized: true })
     .on('secureConnect', common.mustCall(onsecureConnect));
 
   const as = hooks.activitiesOfTypes('TLSWRAP');

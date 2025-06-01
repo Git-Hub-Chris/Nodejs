@@ -445,7 +445,7 @@ utm_allocN(UToolMemory *mem, int32_t n) {
     if(utm_hasCapacity(mem, newIndex)) {
         p=(char *)mem->array+oldIndex*mem->size;
         mem->idx=newIndex;
-        uprv_memset(p, 0, n*mem->size);
+        uprv_memset(p, 0, static_cast<size_t>(n) * mem->size);
     }
     return p;
 }

@@ -39,7 +39,8 @@ const server = https.createServer(serverOptions, common.mustCall((req, res) => {
     port: server.address().port,
     path: '/test',
     clientCertEngine: engine,  // `engine` will provide key+cert
-    rejectUnauthorized: false, // Prevent failing on self-signed certificates
+    rejectUnauthorized: false, // NOTE: This is intentionally set to false for testing purposes only.
+                               //       Do not use this configuration in production environments.
     headers: {},
   };
 

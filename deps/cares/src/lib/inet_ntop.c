@@ -198,7 +198,14 @@ static const char *inet_ntop6(const unsigned char *src, char *dst, size_t size)
       tp += ares_strlen(tp);
       break;
     }
-    tp += snprintf(tp, sizeof(tmp) - (size_t)(tp - tmp), "%x", words[i]);
+    {
+      int n = snprintf(tp, sizeof(tmp) - (size_t)(tp - tmp), "%x", words[i]);
+      if (n < 0 || (size_t)n >= sizeof(tmp) - (size_t)(tp - tmp)) {
+        SET_SOCKERRNO(ENOSPC);
+        return NULL;
+      }
+      tp += n;
+    }
   }
   /* Was it a trailing run of 0x00's? */
   if (best.base != -1 &&

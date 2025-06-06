@@ -21,7 +21,7 @@ const {
 {
   const ret = generateKeyPairSync('rsa', {
     publicExponent: 3,
-    modulusLength: 512,
+    modulusLength: 2048,
     publicKeyEncoding: {
       type: 'pkcs1',
       format: 'pem'

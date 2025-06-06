@@ -262,7 +262,7 @@ assertEquals(["\u{10000}\u{10000}"],
              new RegExp("\\ud800\\udc00+", "u").exec("\u{10000}\u{10000}"));
 
 assertEquals(["\u{10003}\u{50001}"],
-             new RegExp("[\\ud800\\udc03-\\ud900\\udc01\]+", "u").exec(
+             new RegExp("[\\ud800\\udc03-\\ud900\\udc01]+", "u").exec(
                  "\u{10003}\u{50001}"));
 assertEquals(["\u{10003}\u{50001}"],
              new RegExp("[\ud800\udc03-\u{50001}\]+", "u").exec(

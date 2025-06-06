@@ -17,7 +17,7 @@ const methods = {
     bench.start();
     for (let i = 0; i < n; ++i) {
       generateKeyPairSync('rsa', {
-        modulusLength: 1024,
+        modulusLength: 2048,
         publicExponent: 0x10001,
       });
     }
@@ -34,7 +34,7 @@ const methods = {
     bench.start();
     for (let i = 0; i < n; ++i)
       generateKeyPair('rsa', {
-        modulusLength: 512,
+        modulusLength: 2048,
         publicExponent: 0x10001,
       }, done);
   },

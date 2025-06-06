@@ -15,7 +15,7 @@ const {
 {
 
   generateKeyPair('rsa-pss', {
-    modulusLength: 512,
+    modulusLength: 2048,
     hashAlgorithm: 'sha256',
     saltLength: 16
   }, common.mustSucceed((publicKey, privateKey) => {

@@ -589,7 +589,7 @@ static int recode_wnaf(struct smvt_control *control,
             assert(pos < 32);       /* can't fail since current & 0xFFFF != 0 */
             if (odd & (1 << (table_bits + 1)))
                 delta -= (1 << (table_bits + 1));
-            current -= delta * (1 << pos);
+            current -= (uint64_t)delta * (1 << pos);
             control[position].power = pos + 16 * (w - 1);
             control[position].addend = delta;
             position--;

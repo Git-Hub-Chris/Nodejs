@@ -248,7 +248,7 @@ int ossl_asn1_time_to_tm(struct tm *tm, const ASN1_TIME *d)
             }
             o++;
         }
-        if (offset && !OPENSSL_gmtime_adj(&tmp, 0, offset * offsign))
+        if (offset && !OPENSSL_gmtime_adj(&tmp, 0, (long)offset * offsign))
             goto err;
     } else {
         /* not Z, or not +/- in non-strict mode */

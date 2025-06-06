@@ -13,11 +13,11 @@ const {
 // saltLength is the octet length of the hash value."
 {
   generateKeyPair('rsa-pss', {
-    modulusLength: 512,
+    modulusLength: 2048,
     hashAlgorithm: 'sha512'
   }, common.mustSucceed((publicKey, privateKey) => {
     const expectedKeyDetails = {
-      modulusLength: 512,
+      modulusLength: 2048,
       publicExponent: 65537n,
       hashAlgorithm: 'sha512',
       mgf1HashAlgorithm: 'sha512',
@@ -29,12 +29,12 @@ const {
 
   // It is still possible to explicitly set saltLength to 0.
   generateKeyPair('rsa-pss', {
-    modulusLength: 512,
+    modulusLength: 2048,
     hashAlgorithm: 'sha512',
     saltLength: 0
   }, common.mustSucceed((publicKey, privateKey) => {
     const expectedKeyDetails = {
-      modulusLength: 512,
+      modulusLength: 2048,
       publicExponent: 65537n,
       hashAlgorithm: 'sha512',
       mgf1HashAlgorithm: 'sha512',

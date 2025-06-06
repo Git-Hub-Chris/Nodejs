@@ -634,7 +634,7 @@ const { inspect } = require('util');
   // too long salt length
   assert.throws(() => {
     generateKeyPair('rsa-pss', {
-      modulusLength: 512,
+      modulusLength: 2048,
       saltLength: 2147483648,
       hashAlgorithm: 'sha256',
       mgf1HashAlgorithm: 'sha256'
@@ -649,7 +649,7 @@ const { inspect } = require('util');
 
   assert.throws(() => {
     generateKeyPair('rsa-pss', {
-      modulusLength: 512,
+      modulusLength: 2048,
       saltLength: -1,
       hashAlgorithm: 'sha256',
       mgf1HashAlgorithm: 'sha256'

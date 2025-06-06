@@ -173,7 +173,7 @@ NoHang(/[ćăĀ](((.*)*)*x)/);   // Everything after a filtered class is filtere
 NoHang(/(((.*)*)*x)[ćăĀ]/);   // Everything before a filtered class is filtered.
 NoHang(/[^\x00-\xff](((.*)*)*x)/);   // After negated class.
 NoHang(/(((.*)*)*x)[^\x00-\xff]/);   // Before negated class.
-NoHang(/(?!(((.*)*)*x)Ā)foo/);  // Negative lookahead is filtered.
+NoHang(/(?!((([^xĀ]*)*)*x)Ā)foo/);  // Negative lookahead is filtered.
 NoHang(/(?!(((.*)*)*x))Ā/);  // Continuation branch of negative lookahead.
 NoHang(/(?=(((.*)*)*x)Ā)foo/);  // Positive lookahead is filtered.
 NoHang(/(?=(((.*)*)*x))Ā/);  // Continuation branch of positive lookahead.

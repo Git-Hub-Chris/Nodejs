@@ -12,7 +12,7 @@ const {
 // Test sync key generation with key objects.
 {
   const { publicKey, privateKey } = generateKeyPairSync('rsa', {
-    modulusLength: 512
+    modulusLength: 2048
   });
 
   assert.strictEqual(typeof publicKey, 'object');

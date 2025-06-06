@@ -180,7 +180,7 @@ NoHang(/(?=(((.*)*)*x))Ā/);  // Continuation branch of positive lookahead.
 NoHang(/(?=Ā)(((.*)*)*x)/);  // Positive lookahead also prunes continuation.
 NoHang(/(æ|ø|Ā)(((.*)*)*x)/);  // All branches of alternation are filtered.
 NoHang(/(a|b|(((.*)*)*x))Ā/);  // 1 out of 3 branches pruned.
-NoHang(/(a|(((.*)*)*x)ă|(((.*)*)*x)Ā)/);  // 2 out of 3 branches pruned.
+NoHang(/(a|((([^x]*)*)*x)ă|((([^x]*)*)*x)Ā)/);  // 2 out of 3 branches pruned.
 
 var s = "Don't prune based on a repetition of length 0";
 assertEquals(null, s.match(/å{1,1}prune/));

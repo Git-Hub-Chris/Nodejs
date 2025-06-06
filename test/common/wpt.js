@@ -238,7 +238,7 @@ class StatusRule {
    */
   transformPattern(pattern) {
     const result = path.normalize(pattern).replace(/[-/\\^$+?.()|[\]{}]/g, '\\$&');
-    return new RegExp(result.replace('*', '.*'));
+    return new RegExp(result.replace(/\*/g, '.*'));
   }
 }
 

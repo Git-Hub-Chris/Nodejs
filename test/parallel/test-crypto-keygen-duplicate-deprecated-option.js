@@ -13,7 +13,7 @@ const {
 // simultaneously so long as they're identical values.
 {
   generateKeyPair('rsa-pss', {
-    modulusLength: 512,
+    modulusLength: 2048,
     saltLength: 16,
     hash: 'sha256',
     hashAlgorithm: 'sha256',

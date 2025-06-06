@@ -17,7 +17,7 @@ const {
 {
   // If no publicKeyEncoding is specified, a key object should be returned.
   generateKeyPair('rsa', {
-    modulusLength: 1024,
+    modulusLength: 2048,
     privateKeyEncoding: {
       type: 'pkcs1',
       format: 'pem'
@@ -36,7 +36,7 @@ const {
 
   // If no privateKeyEncoding is specified, a key object should be returned.
   generateKeyPair('rsa', {
-    modulusLength: 1024,
+    modulusLength: 2048,
     publicKeyEncoding: {
       type: 'pkcs1',
       format: 'pem'

@@ -77,15 +77,15 @@ function token() {
 function rand_int(bits) {
     if (bits < 1 || bits > 53) {
         throw new TypeError();
-    } else {
-        if (bits >= 1 && bits <= 30) {
-            return 0 | ((1 << bits) * Math.random());
-        } else {
-            var high = (0 | ((1 << (bits - 30)) * Math.random())) * (1 << 30);
-            var low = 0 | ((1 << 30) * Math.random());
-            return  high + low;
-        }
     }
+    var byteLength = Math.ceil(bits / 8);
+    var randomBytes = new Uint8Array(byteLength);
+    window.crypto.getRandomValues(randomBytes);
+    var randomValue = 0;
+    for (var i = 0; i < byteLength; i++) {
+        randomValue = (randomValue << 8) | randomBytes[i];
+    }
+    return randomValue & ((1 << bits) - 1);
 }
 
 /** @private */

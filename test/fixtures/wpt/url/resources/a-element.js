@@ -24,8 +24,8 @@ function runURLTests(urlTests) {
     if (expected.relativeTo === "any-base")
       continue;
 
-    // HTML special cases data: and javascript: URLs in <base>
-    if (expected.base !== null && (expected.base.startsWith("data:") || expected.base.startsWith("javascript:")))
+    // HTML special cases data:, javascript:, and vbscript: URLs in <base>
+    if (expected.base !== null && (expected.base.startsWith("data:") || expected.base.startsWith("javascript:") || expected.base.startsWith("vbscript:")))
       continue;
 
     // We cannot use a null base for HTML tests

@@ -81,10 +81,14 @@ export function jsonAPI({ filename }) {
       nodes.forEach((node, i) => {
         // Input: <!-- name=module -->; output: {name: module}.
         if (node.type === 'html') {
-          node.value = node.value.replace(metaExpr, (_0, key, value) => {
-            current[key.trim()] = value.trim();
-            return '';
-          });
+          let previousValue;
+          do {
+            previousValue = node.value;
+            node.value = node.value.replace(metaExpr, (_0, key, value) => {
+              current[key.trim()] = value.trim();
+              return '';
+            });
+          } while (node.value !== previousValue);
           if (!node.value.trim()) delete nodes[i];
         }
 

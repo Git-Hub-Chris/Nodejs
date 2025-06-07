@@ -32,8 +32,13 @@
           resolve();
         });
 
-        childFrame.src = (new URL(document.location)).searchParams.get('origin')
-          + '/performance-timeline/resources/child-frame.html';
+        const allowedOrigins = ['https://example.com', 'https://another-trusted-site.com'];
+        const origin = (new URL(document.location)).searchParams.get('origin');
+        if (allowedOrigins.includes(origin)) {
+          childFrame.src = origin + '/performance-timeline/resources/child-frame.html';
+        } else {
+          console.error('Invalid origin parameter:', origin);
+        }
 
         document.body.appendChild(childFrame);
       }

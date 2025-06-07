@@ -745,7 +745,7 @@ assert.throws(
 {
   assert.throws(() => {
     const { privateKey } = crypto.generateKeyPairSync('rsa', {
-      modulusLength: 512
+      modulusLength: 2048
     });
     crypto.sign('sha512', 'message', privateKey);
   }, {

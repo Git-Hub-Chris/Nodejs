@@ -265,7 +265,7 @@ assertEquals(["\u{10003}\u{50001}"],
              new RegExp("[\\ud800\\udc03-\\ud900\\udc01]+", "u").exec(
                  "\u{10003}\u{50001}"));
 assertEquals(["\u{10003}\u{50001}"],
-             new RegExp("[\ud800\udc03-\u{50001}\]+", "u").exec(
+             new RegExp("[\ud800\udc03-\u{50001}]+", "u").exec(
                  "\u{10003}\u{50001}"));
 
 // Unicode escape sequences to represent a non-BMP character cannot have

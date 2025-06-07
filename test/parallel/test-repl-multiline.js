@@ -10,7 +10,7 @@ function run({ useColors }) {
   const outputStream = new ArrayStream();
   let output = '';
 
-  outputStream.write = (data) => { output += data.replace('\r', ''); };
+  outputStream.write = (data) => { output += data.replace(/\r/g, ''); };
 
   const r = repl.start({
     prompt: '',

@@ -87,7 +87,7 @@ export function jsonAPI({ filename }) {
             node.value = node.value.replace(metaExpr, (_0, key, value) => {
               current[key.trim()] = value.trim();
               return '';
-            });
+            }).replace(/<!--.*?-->/gs, ''); // Remove any remaining HTML comments
           } while (node.value !== previousValue);
           if (!node.value.trim()) delete nodes[i];
         }

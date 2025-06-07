@@ -1253,7 +1253,7 @@
   block$1.html = edit(block$1.html, 'i').replace('comment', block$1._comment).replace('tag', block$1._tag).replace('attribute', / +[a-zA-Z:_][\w.:-]*(?: *= *"[^"\n]*"| *= *'[^'\n]*'| *= *[^\s"'=<>`]+)?/).getRegex();
   block$1.paragraph = edit(block$1._paragraph).replace('hr', block$1.hr).replace('heading', ' {0,3}#{1,6} ').replace('|lheading', '') // setex headings don't interrupt commonmark paragraphs
   .replace('blockquote', ' {0,3}>').replace('fences', ' {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n').replace('list', ' {0,3}(?:[*+-]|1[.)]) ') // only lists starting from 1 can interrupt
-  .replace('html', '</?(?:tag)(?: +|\\n|/?>)|<(?:script|SCRIPT|pre|PRE|style|STYLE|textarea|TEXTAREA|!--)(?:\\s[^>]*)?>').replace('tag', block$1._tag) // pars can be interrupted by type (6) html blocks
+  .replace('html', '</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)(?:\\s[^>]*)?>').replace('tag', block$1._tag).getRegex('i') // pars can be interrupted by type (6) html blocks
   .getRegex();
   block$1.blockquote = edit(block$1.blockquote).replace('paragraph', block$1.paragraph).getRegex();
   /**

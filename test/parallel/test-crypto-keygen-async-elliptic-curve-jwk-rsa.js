@@ -12,7 +12,7 @@ const {
 // Test async elliptic curve key generation with 'jwk' encoding and RSA.
 {
   generateKeyPair('rsa', {
-    modulusLength: 1024,
+    modulusLength: 2048,
     publicKeyEncoding: {
       format: 'jwk'
     },

@@ -21,7 +21,7 @@ const { generateKeyPair } = require('crypto');
   // This test makes sure deprecated options still work as intended
 
   generateKeyPair('rsa-pss', {
-    modulusLength: 512,
+    modulusLength: 2048,
     saltLength: 16,
     hash: 'sha256',
     mgf1Hash: 'sha256'

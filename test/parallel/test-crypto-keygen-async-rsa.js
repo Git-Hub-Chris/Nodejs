@@ -19,7 +19,7 @@ const {
 {
   generateKeyPair('rsa', {
     publicExponent: 0x10001,
-    modulusLength: 512,
+    modulusLength: 2048,
     publicKeyEncoding: {
       type: 'pkcs1',
       format: 'der'

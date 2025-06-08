@@ -14,7 +14,7 @@ const {
   privateDecrypt,
 } = require('crypto');
 
-const pair = generateKeyPairSync('rsa', { modulusLength: 512 });
+const pair = generateKeyPairSync('rsa', { modulusLength: 2048 });
 
 const expected = Buffer.from('shibboleth');
 const encrypted = publicEncrypt(pair.publicKey, expected);

@@ -47,7 +47,7 @@ assert.throws(() => generateKey('aes', { length: 256 }), {
   code: 'ERR_INVALID_ARG_TYPE'
 });
 
-assert.throws(() => generateKey('hmac', { length: -1 }, common.mustNotCall()), {
+assert.throws(() => generateKey('hmac', { length: 64 }, common.mustNotCall()), {
   code: 'ERR_OUT_OF_RANGE'
 });
 
@@ -64,7 +64,7 @@ assert.throws(
     code: 'ERR_OUT_OF_RANGE'
   });
 
-assert.throws(() => generateKeySync('hmac', { length: -1 }), {
+assert.throws(() => generateKeySync('hmac', { length: 64 }), {
   code: 'ERR_OUT_OF_RANGE'
 });
 

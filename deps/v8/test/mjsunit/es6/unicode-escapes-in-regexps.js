@@ -270,8 +270,8 @@ assertEquals(["\u{10003}\u{50001}"],
 
 // Unicode escape sequences to represent a non-BMP character cannot have
 // mixed notation, and must follow the rules for RegExpUnicodeEscapeSequence.
-assertThrows(() => new RegExp("[\\ud800\udc03-\ud900\\udc01\]+", "u"));
-assertThrows(() => new RegExp("[\\ud800\udc03-\ud900\\udc01\]+", "u"));
+assertThrows(() => new RegExp("[\\ud800\udc03-\ud900\\udc01]+", "u"));
+assertThrows(() => new RegExp("[\\ud800\udc03-\ud900\\udc01]+", "u"));
 assertNull(new RegExp("\\ud800\udc00+", "u").exec("\u{10000}\u{10000}"));
 assertNull(new RegExp("\ud800\\udc00+", "u").exec("\u{10000}\u{10000}"));
 

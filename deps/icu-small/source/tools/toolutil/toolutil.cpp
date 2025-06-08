@@ -348,7 +348,7 @@ utm_open(const char *name, int32_t initialCapacity, int32_t maxCapacity, int32_t
         maxCapacity=initialCapacity;
     }
 
-    mem=(UToolMemory *)uprv_malloc(sizeof(UToolMemory)+initialCapacity*size);
+    mem=(UToolMemory *)uprv_malloc(sizeof(UToolMemory)+(unsigned long)initialCapacity*size);
     if(mem==nullptr) {
         fprintf(stderr, "error: %s - out of memory\n", name);
         exit(U_MEMORY_ALLOCATION_ERROR);

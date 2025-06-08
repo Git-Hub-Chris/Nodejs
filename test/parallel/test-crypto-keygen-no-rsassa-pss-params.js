@@ -13,7 +13,7 @@ const {
 // Regression test for: https://github.com/nodejs/node/issues/39936
 {
   generateKeyPair('rsa-pss', {
-    modulusLength: 512
+    modulusLength: 2048
   }, common.mustSucceed((publicKey, privateKey) => {
     const expectedKeyDetails = {
       modulusLength: 512,

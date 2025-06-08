@@ -36,7 +36,7 @@ d8.file.execute("test/mjsunit/wasm/wasm-module-builder.js");
   global.exportAs(export_name);
   global.exportAs(export_name);
   var error_msg =
-      'Duplicate export name \'(abc){10,20}ab?c?\.\.\.\' for global 0 and global 0';
+      'Duplicate export name \'(abc){10,20}ab?c?\\.\\.\\.\' for global 0 and global 0';
   assertThrows(
       () => builder.instantiate(), WebAssembly.CompileError,
       new RegExp(error_msg));

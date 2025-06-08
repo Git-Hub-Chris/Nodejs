@@ -1,15 +1,16 @@
 (function() {
+    const crypto = require('crypto');
+
     function randInt(bits) {
         if (bits < 1 || bits > 53) {
             throw new TypeError();
         } else {
-            if (bits >= 1 && bits <= 30) {
-                return 0 | ((1 << bits) * Math.random());
-            } else {
-                var high = (0 | ((1 << (bits - 30)) * Math.random())) * (1 << 30);
-                var low = 0 | ((1 << 30) * Math.random());
-                return  high + low;
+            const bytes = crypto.randomBytes(Math.ceil(bits / 8));
+            let randomValue = 0;
+            for (let i = 0; i < bytes.length; i++) {
+                randomValue = (randomValue << 8) | bytes[i];
             }
+            return randomValue & ((1 << bits) - 1);
         }
     }
 

@@ -14,17 +14,17 @@ const {
 // https://github.com/nodejs/node/issues/46102#issuecomment-1372153541
 {
   generateKeyPair('rsa', {
-    modulusLength: 513,
+    modulusLength: 2048,
   }, common.mustSucceed((publicKey, privateKey) => {
-    assert.strictEqual(privateKey.asymmetricKeyDetails.modulusLength, 513);
-    assert.strictEqual(publicKey.asymmetricKeyDetails.modulusLength, 513);
+    assert.strictEqual(privateKey.asymmetricKeyDetails.modulusLength, 2048);
+    assert.strictEqual(publicKey.asymmetricKeyDetails.modulusLength, 2048);
   }));
 
   generateKeyPair('rsa-pss', {
-    modulusLength: 513,
+    modulusLength: 2048,
   }, common.mustSucceed((publicKey, privateKey) => {
-    assert.strictEqual(privateKey.asymmetricKeyDetails.modulusLength, 513);
-    assert.strictEqual(publicKey.asymmetricKeyDetails.modulusLength, 513);
+    assert.strictEqual(privateKey.asymmetricKeyDetails.modulusLength, 2048);
+    assert.strictEqual(publicKey.asymmetricKeyDetails.modulusLength, 2048);
   }));
 
   if (common.hasOpenSSL3) {

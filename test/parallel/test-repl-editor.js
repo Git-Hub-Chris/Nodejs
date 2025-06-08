@@ -17,7 +17,7 @@ function run({ input, output, event, checkTerminalCodes = true }) {
   const stream = new ArrayStream();
   let found = '';
 
-  stream.write = (msg) => found += msg.replace('\r', '');
+  stream.write = (msg) => found += msg.replace(/\r/g, '');
 
   let expected =
     `${terminalCode}.editor\n` +

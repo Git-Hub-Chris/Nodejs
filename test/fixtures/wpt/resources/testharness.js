@@ -4711,12 +4711,17 @@
         var components = name.split(".");
         var target = global_scope;
         for (var i = 0; i < components.length - 1; i++) {
+            if (components[i] === "__proto__" || components[i] === "constructor") {
+                continue; // Skip dangerous property names
+            }
             if (!(components[i] in target)) {
                 target[components[i]] = {};
             }
             target = target[components[i]];
         }
-        target[components[components.length - 1]] = object;
+        if (components[components.length - 1] !== "__proto__" && components[components.length - 1] !== "constructor") {
+            target[components[components.length - 1]] = object;
+        }
     }
 
     function is_same_origin(w) {

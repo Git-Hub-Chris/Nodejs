@@ -45,7 +45,7 @@ process.env.HAS_STARTED_WORKER = 1;
   // The main thread generates keys and passes them to worker threads.
   const secretKey = generateKeySync('aes', { length: 128 });
   const { publicKey, privateKey } = generateKeyPairSync('rsa', {
-    modulusLength: 1024
+    modulusLength: 2048
   });
   const cryptoKey = await subtle.generateKey(
     { name: 'AES-CBC', length: 128 }, false, ['encrypt']);

@@ -13,7 +13,7 @@ const {
 // Test invalid parameter encoding.
 {
   assert.throws(() => generateKeyPairSync('dsa', {
-    modulusLength: 1024,
+    modulusLength: 2048,
     publicKeyEncoding: {
       format: 'jwk'
     },

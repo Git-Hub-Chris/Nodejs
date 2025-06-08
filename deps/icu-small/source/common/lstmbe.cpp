@@ -327,7 +327,7 @@ public:
     }
 
     inline Array2D& clear() {
-        uprv_memset(data_, 0, d1_ * d2_ * sizeof(float));
+        uprv_memset(data_, 0, static_cast<size_t>(d1_) * d2_ * sizeof(float));
         return *this;
     }
 

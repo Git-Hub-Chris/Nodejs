@@ -10,7 +10,7 @@ function run({ command, expected, useColors = false }) {
   let accum = '';
 
   const output = new ArrayStream();
-  output.write = (data) => accum += data.replace('\r', '');
+  output.write = (data) => accum += data.replace(/\r/g, '');
 
   const r = repl.start({
     prompt: '',

@@ -160,7 +160,7 @@ shouldBeNull("regexp31.exec('Committer:')");
 var regexp32 = /\s*(m(\[[^\]]+\])|m(u?)("[^"]+"))\s*/;
 shouldBeNull("regexp32.exec('Committer:')");
 
-var regexp33 = RegExp('^(?:(?:(a)(xyz|[^>"\'\s]*)?)|(/?>)|.[^\w\s>]*)');
+var regexp33 = RegExp('^(?:(?:(a)(xyz|[^>"\'\\s]*)?)|(/?>)|.[^\\w\\s>]*)');
 shouldBe("regexp33.exec('> <head>')","['>',undefined,undefined,'>']");
 
 var regexp34 = /(?:^|\b)btn-\S+/;

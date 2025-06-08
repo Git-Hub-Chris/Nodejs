@@ -406,12 +406,12 @@ utm_hasCapacity(UToolMemory *mem, int32_t capacity) {
         }
 
         if(mem->array==mem->staticArray) {
-            mem->array=uprv_malloc(newCapacity*mem->size);
+            mem->array=uprv_malloc(static_cast<size_t>(newCapacity) * mem->size);
             if(mem->array!=nullptr) {
                 uprv_memcpy(mem->array, mem->staticArray, (size_t)mem->idx*mem->size);
             }
         } else {
-            mem->array=uprv_realloc(mem->array, newCapacity*mem->size);
+            mem->array=uprv_realloc(mem->array, static_cast<size_t>(newCapacity) * mem->size);
         }
 
         if(mem->array==nullptr) {

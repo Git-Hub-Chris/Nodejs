@@ -21842,11 +21842,15 @@ async function installVersion(installTarget, locator, { spec }) {
     }
   } else {
     url = decodeURIComponent(version3);
-    if (process.env.COREPACK_NPM_REGISTRY && url.startsWith(DEFAULT_NPM_REGISTRY_URL)) {
-      url = url.replace(
-        DEFAULT_NPM_REGISTRY_URL,
-        () => process.env.COREPACK_NPM_REGISTRY
-      );
+    if (process.env.COREPACK_NPM_REGISTRY) {
+      const parsedUrl = new URL(url);
+      const allowedHosts = ['registry.npmjs.org'];
+      if (allowedHosts.includes(parsedUrl.host)) {
+        url = url.replace(
+          DEFAULT_NPM_REGISTRY_URL,
+          () => process.env.COREPACK_NPM_REGISTRY
+        );
+      }
     }
   }
   log(`Installing ${locator.name}@${version3} from ${url}`);

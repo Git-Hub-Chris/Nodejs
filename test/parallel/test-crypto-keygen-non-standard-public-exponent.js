@@ -14,14 +14,14 @@ const {
 {
   const { publicKey, privateKey } = generateKeyPairSync('rsa', {
     publicExponent: 3,
-    modulusLength: 512
+    modulusLength: 2048
   });
 
   assert.strictEqual(typeof publicKey, 'object');
   assert.strictEqual(publicKey.type, 'public');
   assert.strictEqual(publicKey.asymmetricKeyType, 'rsa');
   assert.deepStrictEqual(publicKey.asymmetricKeyDetails, {
-    modulusLength: 512,
+    modulusLength: 2048,
     publicExponent: 3n
   });
 
@@ -29,7 +29,7 @@ const {
   assert.strictEqual(privateKey.type, 'private');
   assert.strictEqual(privateKey.asymmetricKeyType, 'rsa');
   assert.deepStrictEqual(privateKey.asymmetricKeyDetails, {
-    modulusLength: 512,
+    modulusLength: 2048,
     publicExponent: 3n
   });
 }

@@ -191,7 +191,7 @@ test('assert.throws()', () => {
   );
 
   assert.throws(
-    () => assert.doesNotThrow(() => thrower(Error), /\[[a-z]{6}\s[A-z]{6}\]/g, 'user message'),
+    () => assert.doesNotThrow(() => thrower(Error), /\[[a-z]{6}\s[A-Z]{6}\]/g, 'user message'),
     {
       name: 'AssertionError',
       code: 'ERR_ASSERTION',

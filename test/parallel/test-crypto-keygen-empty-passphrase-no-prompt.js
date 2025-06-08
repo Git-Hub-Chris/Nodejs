@@ -18,7 +18,7 @@ const {
 // See https://github.com/nodejs/node/issues/35898.
 for (const type of ['pkcs1', 'pkcs8']) {
   generateKeyPair('rsa', {
-    modulusLength: 1024,
+    modulusLength: 2048,
     privateKeyEncoding: {
       type,
       format: 'pem',

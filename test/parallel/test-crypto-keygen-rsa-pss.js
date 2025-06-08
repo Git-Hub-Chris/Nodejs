@@ -17,7 +17,7 @@ const {
 // Test RSA-PSS.
 {
   generateKeyPair('rsa-pss', {
-    modulusLength: 512,
+    modulusLength: 2048,
     saltLength: 16,
     hashAlgorithm: 'sha256',
     mgf1HashAlgorithm: 'sha256'

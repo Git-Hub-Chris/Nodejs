@@ -44,7 +44,8 @@ const env = { ...process.env,
               NPM_CONFIG_TMP: path.join(npmSandbox, 'npm-tmp'),
               HOME: homeDir };
 
-exec(`${process.execPath} ${corepackYarnPath} install`, {
+const args = [corepackYarnPath, 'install'];
+require('child_process').execFile(process.execPath, args, {
   cwd: installDir,
   env: env,
 }, common.mustCall(handleExit));

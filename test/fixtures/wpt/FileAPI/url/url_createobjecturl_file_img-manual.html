@@ -22,7 +22,12 @@
   var img = document.querySelector("#displayImage");
 
   fileInput.addEventListener("change", function(evt) {
-    img.src = window.URL.createObjectURL(fileInput.files[0]);
+    var file = fileInput.files[0];
+    if (file && file.type.startsWith("image/")) {
+      img.src = window.URL.createObjectURL(file);
+    } else {
+      alert("Please select a valid image file.");
+    }
   }, false);
 </script>
 

@@ -185,6 +185,16 @@ class Grid {
     return this.backgroundFocusRow >= bound[0] && this.backgroundFocusRow <= bound[1] &&
             this.backgroundFocusColumn >= bound[2] && this.backgroundFocusColumn <= bound[3];
   }
+  /**
+   * Escapes HTML special characters in a string to prevent XSS.
+   * @param str The string to escape.
+   * @returns The escaped string.
+   */
+  private escapeHtml(str: string): string {
+    const div = document.createElement('div');
+    div.innerText = str;
+    return div.innerHTML;
+  }
 }
 
 // This class is used as a wrapper to hide the switch between the
@@ -698,7 +708,7 @@ class StringConstructor {
       regEl.innerHTML = str;
     } else if (!isVirtual) {
       const span = "".padEnd(C.FIXED_REGISTER_LABEL_WIDTH - registerName.length, "_");
-      regEl.innerHTML = `HW - <span class='range-transparent'>${span}</span>${registerName}`;
+      regEl.innerHTML = `HW - <span class='range-transparent'>${span}</span>${this.escapeHtml(registerName)}`;
     } else {
       regEl.innerText = registerName;
     }

@@ -29,4 +29,4 @@
 
 assertEquals("foo", "foo".replace(/(?:)/g, function() { return ""; }));
 
-assertEquals("foo", "foo".replace(/(?:)/g, ""));
+assertEquals("f-o-o", "foo".replace(/(?:)/g, "-"));

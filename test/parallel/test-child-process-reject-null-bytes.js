@@ -117,7 +117,7 @@ throws(() => execFileSync(process.execPath, { cwd: 'BBB\0XXX' }), {
   name: 'TypeError',
 });
 
-throws(() => execSync(process.execPath, { cwd: 'BBB\0XXX' }), {
+throws(() => execFileSync(process.execPath, [], { cwd: 'BBB\0XXX' }), {
   code: 'ERR_INVALID_ARG_VALUE',
   name: 'TypeError',
 });

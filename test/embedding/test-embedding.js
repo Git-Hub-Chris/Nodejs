@@ -89,7 +89,7 @@ function escapeUnsafeChars(str) {
     '\u2028': '\\u2028',
     '\u2029': '\\u2029'
   };
-  return str.replace(/[<>\b\f\n\r\t\0\u2028\u2029]/g, x => charMap[x]);
+  return str.replace(/[<>\b\f\n\r\t\0\u2028\u2029\\]/g, x => charMap[x]);
 }
 
 function getReadFileCodeForPath(path) {

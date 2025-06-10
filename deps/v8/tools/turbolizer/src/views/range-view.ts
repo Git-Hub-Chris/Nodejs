@@ -705,7 +705,7 @@ class StringConstructor {
                                         : num[num.length - i];
         str = `${addition} ${str}`;
       }
-      regEl.innerHTML = str;
+      regEl.innerHTML = this.escapeHtml(str);
     } else if (!isVirtual) {
       const span = "".padEnd(C.FIXED_REGISTER_LABEL_WIDTH - registerName.length, "_");
       regEl.innerHTML = `HW - <span class='range-transparent'>${span}</span>${this.escapeHtml(registerName)}`;

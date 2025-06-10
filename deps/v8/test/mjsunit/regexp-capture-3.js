@@ -176,7 +176,7 @@ NoHang(/(([^xĀ]*x)[^\x00-\xff])/);   // Before negated class.
 NoHang(/(?!((([^xĀ]*)*)*x)Ā)foo/);  // Negative lookahead is filtered.
 NoHang(/(?!(((.*)*)*x))Ā/);  // Continuation branch of negative lookahead.
 NoHang(/(?=(((.*)*)*x)Ā)foo/);  // Positive lookahead is filtered.
-NoHang(/(?=((([^x]+)*)*x))Ā/);  // Continuation branch of positive lookahead.
+NoHang(/(?=((([^x][^x]*)*)*x))Ā/);  // Continuation branch of positive lookahead.
 NoHang(/(?=Ā)([^x]*x)/);  // Positive lookahead also prunes continuation.
 NoHang(/(æ|ø|Ā)(((.*[^x]+)*)*x)/);  // All branches of alternation are filtered.
 NoHang(/(a|b|(((.*)*)*x))Ā/);  // 1 out of 3 branches pruned.

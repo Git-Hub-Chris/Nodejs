@@ -23,12 +23,17 @@
 
   fileInput.addEventListener("change", function(evt) {
     var file = fileInput.files[0];
-    if (file && file.type.startsWith("image/")) {
+    if (file && file.type.startsWith("image/") && file.size > 0 && file.size <= 5 * 1024 * 1024) { // Validate MIME type and size (max 5MB)
       var reader = new FileReader();
       reader.onload = function(event) {
         var image = new Image();
         image.onload = function() {
-          img.src = window.URL.createObjectURL(file);
+          try {
+            var objectURL = window.URL.createObjectURL(file);
+            img.src = objectURL;
+          } catch (e) {
+            alert("Failed to create object URL for the selected file.");
+          }
         };
         image.onerror = function() {
           alert("The selected file is not a valid image.");
@@ -37,7 +42,7 @@
       };
       reader.readAsDataURL(file);
     } else {
-      alert("Please select a valid image file.");
+      alert("Please select a valid image file (max size: 5MB).");
     }
   }, false);
 </script>

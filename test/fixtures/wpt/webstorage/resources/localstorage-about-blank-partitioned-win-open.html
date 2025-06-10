@@ -12,7 +12,8 @@ window.addEventListener("load", () => {
   }
 
   let win = window.opener ? window.opener : window.parent;
-  win.postMessage(payload, "*");
+  const trustedOrigin = "https://trusted-origin.example.com"; // Replace with the actual trusted origin
+  win.postMessage(payload, trustedOrigin);
 });
 
 window.addEventListener("message", e => {
@@ -26,12 +27,14 @@ window.addEventListener("message", e => {
     }
 
     let win = window.opener ? parent.window.opener : window.parent;
-    win.postMessage(payload, "*");
+    const trustedOrigin = "https://trusted-origin.example.com"; // Replace with the actual trusted origin
+    win.postMessage(payload, trustedOrigin);
   }
 
   if (e.data.command == "close about:blank window") {
     window.blankWindow.close();
-    win.postMessage({message: "about:blank window closed"}, "*");
+    const trustedOrigin = "https://trusted-origin.example.com"; // Replace with the actual trusted origin
+    win.postMessage({message: "about:blank window closed"}, trustedOrigin);
   }
 });
 </script>

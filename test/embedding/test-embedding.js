@@ -74,8 +74,27 @@ spawnSyncAndExit(
     signal: null,
   });
 
+function escapeUnsafeChars(str) {
+  const charMap = {
+    '<': '\\u003C',
+    '>': '\\u003E',
+    '/': '\\u002F',
+    '\\': '\\\\',
+    '\b': '\\b',
+    '\f': '\\f',
+    '\n': '\\n',
+    '\r': '\\r',
+    '\t': '\\t',
+    '\0': '\\0',
+    '\u2028': '\\u2028',
+    '\u2029': '\\u2029'
+  };
+  return str.replace(/[<>\b\f\n\r\t\0\u2028\u2029]/g, x => charMap[x]);
+}
+
 function getReadFileCodeForPath(path) {
-  return `(require("fs").readFileSync(${JSON.stringify(path)}, "utf8"))`;
+  const sanitizedPath = escapeUnsafeChars(JSON.stringify(path));
+  return `(require("fs").readFileSync(${sanitizedPath}, "utf8"))`;
 }
 
 // Basic snapshot support

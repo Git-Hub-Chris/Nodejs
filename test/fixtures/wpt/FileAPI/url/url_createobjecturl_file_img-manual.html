@@ -26,11 +26,18 @@
     if (file && file.type.startsWith("image/") && file.size > 0 && file.size <= 5 * 1024 * 1024) { // Validate MIME type and size (max 5MB)
       var reader = new FileReader();
       reader.onload = function(event) {
-        var image = new Image();
+        var image = new Image(); // Initialize Image object for content validation
         image.onload = function() {
           try {
             var objectURL = window.URL.createObjectURL(file);
-            img.src = objectURL;
+            image.src = objectURL; // Use the Image object for validation
+            image.onload = function() {
+              img.src = objectURL; // Assign to img.src only after validation
+            };
+            image.onerror = function() {
+              alert("The selected file is not a valid image.");
+              window.URL.revokeObjectURL(objectURL); // Revoke the object URL to free resources
+            };
           } catch (e) {
             alert("Failed to create object URL for the selected file.");
           }

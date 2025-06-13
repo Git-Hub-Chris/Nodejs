@@ -32,8 +32,13 @@
             var objectURL = window.URL.createObjectURL(file);
             image.src = objectURL; // Use the Image object for validation
             image.onload = function() {
-              img.src = objectURL; // Assign to img.src only after validation
-              window.URL.revokeObjectURL(objectURL); // Revoke the object URL after successful assignment
+              if (image.width > 0 && image.height > 0) { // Ensure the image has valid dimensions
+                img.src = objectURL; // Assign to img.src only after validation
+                window.URL.revokeObjectURL(objectURL); // Revoke the object URL after successful assignment
+              } else {
+                alert("The selected file is not a valid image.");
+                window.URL.revokeObjectURL(objectURL); // Revoke the object URL to free resources
+              }
             };
             image.onerror = function() {
               alert("The selected file is not a valid image.");
